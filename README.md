@@ -10,7 +10,8 @@ This example uses the [Connexion](https://github.com/zalando/connexion) library 
 ## Requirements
 Python 3.5.2+
 
-To install the anomaly detection module clone this project : https://github.com/DApIA-Project/Anomaly-Detection.git and follow the 'lib compilation' instructions in the README. You have to build the file `AircraftClassifier-0.0.1-py3-none-any.whl`
+To install the anomaly detection module clone this project : https://github.com/DApIA-Project/Anomaly-Detection.git and follow the 'lib compilation' instructions in the README. You have to build the file `AircraftClassifier-0.0.1-py3-none-any.whl`.
+And do pip install in openapi_server/controllers/
 
 ## Usage
 To run the server, please execute the following from the root directory:
