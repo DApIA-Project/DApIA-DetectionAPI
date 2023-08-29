@@ -15,7 +15,7 @@ Follow the 'lib compilation' instructions in the README. You have to build the f
 ```
 python build.py sdist bdist_wheel
 ```
-Move `AircraftClassifier-0.0.1-py3-none-any.whl` in `/openapi_server/controllers/` of this project.\
+Move `AircraftClassifier-0.0.1-py3-none-any.whl` in `/openapi_server/controllers/` of this project.
 
 And do this when you are not using docker
 ```
