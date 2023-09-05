@@ -53,11 +53,13 @@ tox
 
 To run the server on a Docker container, please execute the following from the root directory:
 
+Build the image:
 ```bash
-# building the image
 docker build -t dapia-detection-api .
+```
 
-# starting up a container
+Start up a container:
+```bash
 docker run -p 3033:3033 dapia-detection-api
 ```
 
