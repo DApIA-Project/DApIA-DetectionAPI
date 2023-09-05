@@ -11,7 +11,7 @@ COPY . /usr/src/app
 
 RUN pip3 install ./openapi_server/controllers/AircraftClassifier-0.0.1-py3-none-any.whl
 
-EXPOSE 3002
+EXPOSE 3033
 
 ENTRYPOINT ["python3"]
 
