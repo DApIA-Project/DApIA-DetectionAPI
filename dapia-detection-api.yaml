@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  description: API Flask Server for Anomaly Detection
+  title: API Flask Server for Anomaly Detection
+  version: 1.0.0
+servers:
+- url: http://localhost:3002
+paths:
+  /send-message:
+    post:
+      operationId: classify_aircraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/_classify_aircraft_request'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_classify_aircraft_200_response'
+          description: The message was successfully sent to the server.
+      summary: Send a message ADS-B to the server.
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+components:
+  schemas:
+    _classify_aircraft_200_response:
+      type: string
+      example: "HELICOPTER"
+      description: The type of aircraft.
+    _classify_aircraft_request:
+      properties:
+        message:
+          description: The message ADS-B
+          example: '[{"timestamp":"1656766055","icao24":"3b7b96","latitude":"43.40913391113281","longitude":"1.724150901617006","groundspeed":"120.0","track":"311.2759420272517","vertical_rate":"128.0","callsign":"DRAG66","onground":"False","alert":"False","spi":"False","squawk":"NaN","altitude":"1850.0","geoaltitude":"1850.0","last_position":"","lastcontact":"","hour":""}]'
+          title: message
+          type: string
+      title: _classify_aircraft_request
+      type: object

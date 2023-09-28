@@ -8,6 +8,17 @@ This server is an API detecting anomalies in a ADS-B message stream.
 
 - Python 3.11.5
 - Poetry 1.6.1
+- Docker
+
+## Generate API
+
+```shell
+docker run --rm \
+  -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+  -i ./dapia-detection-api \
+  -g python-flask \
+  -o .
+```
 
 To install the anomaly detection module clone this project : https://github.com/DApIA-Project/Anomaly-Detection.git. \
 Follow the 'lib compilation' instructions in the README. You have to build the

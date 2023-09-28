@@ -4,9 +4,7 @@ Dockerfile
 README.md
 requirements.txt
 test-requirements.txt
-/openapi_server/openapi/openapi.yaml
 .openapi-generator-ignore
-/openapi_server/openapi/openapitools.json
 .travis.yml
 git_push.sh
 tox.ini
