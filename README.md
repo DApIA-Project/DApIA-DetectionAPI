@@ -30,20 +30,7 @@ To run the server, please execute the following from the root directory:
 ```shell
 poetry run python -m dapia_detection_api
 ```
-
-and open your browser to here:
-
-```
-http://localhost:3033/ui/
-```
-
-Your OpenAPI definition lives here:
-
-```
-http://localhost:3033/openapi.json
-```
-
-## Running with Docker
+## Run with Docker
 
 To run the server on a Docker container, please execute the following from the root directory:
 
@@ -59,3 +46,8 @@ Start up a container:
 docker run -p 3033:3033 dapia-detection-api
 ```
 
+## Use API
+
+You can visualize specification of DApIA Detection API at the following URLs:
+- UI API specification: [http://localhost:3033/ui/](http://localhost:3033/ui/)
+- OpenAPI definition: [http://localhost:3033/openapi.json](http://localhost:3033/openapi.json)
