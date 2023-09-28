@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "dapia-detection-api"
+version = "0.1.0"
+description = ""
+authors = ["Aymeric <aymeric.cretin@smartesting.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.5"
+Flask = "2.1.1"
+tensorboard = "2.13.0"
+tensorboard-data-server = "0.7.1"
+tensorflow = "2.13.0"
+setuptools = "^41.0.0"
+python-dateutil = "^2.8.2"
+swagger-ui-bundle = "0.0.2"
+connexion = {version = "^2.6.0", extras = ["swagger-ui"]}
+tensorflow-io-gcs-filesystem = "0.31.0"
+aircraftclassifier = {file = "./lib/AircraftClassifier-0.0.1-py3-none-any.whl"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
