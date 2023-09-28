@@ -1,18 +1,23 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+ENV MODE=""
+ENV PYTHONFAULTHANDLER=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONHASHSEED=random
+ENV PIP_NO_CACHE_DIR=off
+ENV PIP_DISABLE_PIP_VERSION_CHECK=on
+ENV PIP_DEFAULT_TIMEOUT=100
+ENV POETRY_VERSION=1.6.1
 
-COPY requirements.txt /usr/src/app/
-
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install "poetry==$POETRY_VERSION"
 
 COPY . /usr/src/app
+WORKDIR /usr/src/app
 
-RUN pip3 install ./openapi_server/controllers/AircraftClassifier-0.0.1-py3-none-any.whl
+RUN poetry config virtualenvs.create false
+RUN poetry install $MODE --no-interaction --no-ansi
 
 EXPOSE 3033
 
-ENTRYPOINT ["python3"]
-
-CMD ["-m", "openapi_server"]
+ENTRYPOINT ["poetry"]
+CMD ["run", "python", "-m", "openapi_server"]
