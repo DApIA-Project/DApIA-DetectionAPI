@@ -1,9 +1,7 @@
-# coding: utf-8
-
 import sys
 from setuptools import setup, find_packages
 
-NAME = "openapi_server"
+NAME = "dapia_detection_api"
 VERSION = "1.0.0"
 
 # To install the library, run the following
@@ -31,7 +29,7 @@ setup(
     package_data={'': ['openapi/openapi.yaml']},
     include_package_data=True,
     entry_points={
-        'console_scripts': ['openapi_server=openapi_server.__main__:main']},
+        'console_scripts': ['dapia_detection_api=dapia_detection_api.__main__:main']},
     long_description="""\
     API Flask Server for Anomaly Detection
     """

@@ -1,25 +1,20 @@
-# coding: utf-8
-
-from __future__ import absolute_import
 import unittest
 
 from flask import json
-from six import BytesIO
 
-from openapi_server.models.send_message_post200_response import SendMessagePost200Response  # noqa: E501
-from openapi_server.models.send_message_post_request import SendMessagePostRequest  # noqa: E501
-from openapi_server.test import BaseTestCase
+from dapia_detection_api.models.classify_aircraft_request import ClassifyAircraftRequest  # noqa: E501
+from dapia_detection_api.test import BaseTestCase
 
 
 class TestDefaultController(BaseTestCase):
     """DefaultController integration test stubs"""
 
-    def test_send_message_post(self):
-        """Test case for send_message_post
+    def test_classify_aircraft(self):
+        """Test case for classify_aircraft
 
         Send a message ADS-B to the server.
         """
-        send_message_post_request = openapi_server.SendMessagePostRequest()
+        classify_aircraft_request = dapia_detection_api.ClassifyAircraftRequest()
         headers = { 
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -28,7 +23,7 @@ class TestDefaultController(BaseTestCase):
             '/send-message',
             method='POST',
             headers=headers,
-            data=json.dumps(send_message_post_request),
+            data=json.dumps(classify_aircraft_request),
             content_type='application/json')
         self.assert200(response,
                        'Response body is : ' + response.data.decode('utf-8'))

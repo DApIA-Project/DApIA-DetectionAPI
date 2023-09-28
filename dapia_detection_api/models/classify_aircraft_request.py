@@ -1,12 +1,9 @@
-# coding: utf-8
-
-from __future__ import absolute_import
 from datetime import date, datetime  # noqa: F401
 
 from typing import List, Dict  # noqa: F401
 
-from openapi_server.models.base_model_ import Model
-from openapi_server import util
+from dapia_detection_api.models.base_model import Model
+from dapia_detection_api import util
 
 
 class ClassifyAircraftRequest(Model):
@@ -37,13 +34,13 @@ class ClassifyAircraftRequest(Model):
 
         :param dikt: A dict.
         :type: dict
-        :return: The _classifyAircraft_request of this ClassifyAircraftRequest.  # noqa: E501
+        :return: The _classify_aircraft_request of this ClassifyAircraftRequest.  # noqa: E501
         :rtype: ClassifyAircraftRequest
         """
         return util.deserialize_model(dikt, cls)
 
     @property
-    def message(self):
+    def message(self) -> str:
         """Gets the message of this ClassifyAircraftRequest.
 
         The message ADS-B  # noqa: E501
@@ -54,7 +51,7 @@ class ClassifyAircraftRequest(Model):
         return self._message
 
     @message.setter
-    def message(self, message):
+    def message(self, message: str):
         """Sets the message of this ClassifyAircraftRequest.
 
         The message ADS-B  # noqa: E501

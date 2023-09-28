@@ -3,7 +3,7 @@ import logging
 import connexion
 from flask_testing import TestCase
 
-from openapi_server.encoder import JSONEncoder
+from dapia_detection_api.encoder import JSONEncoder
 
 
 class BaseTestCase(TestCase):

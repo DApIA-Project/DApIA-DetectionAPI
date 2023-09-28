@@ -2,7 +2,7 @@
 
 import connexion
 
-from openapi_server import encoder
+from dapia_detection_api import encoder
 
 
 def main():
@@ -12,7 +12,7 @@ def main():
                 arguments={'title': 'API Flask Server for Anomaly Detection'},
                 pythonic_params=True)
 
-    app.run(port=3033, debug=True)
+    app.run(port=8080)
 
 
 if __name__ == '__main__':

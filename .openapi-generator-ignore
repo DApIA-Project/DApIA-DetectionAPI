@@ -1,5 +1,4 @@
-/openapi_server/controllers/default_controller.py
-/openapi_server/__main__.py
+/dapia-detection-api/controllers/default_controller.py
 Dockerfile
 README.md
 requirements.txt
@@ -8,3 +7,5 @@ test-requirements.txt
 .travis.yml
 git_push.sh
 tox.ini
+.dockerignore
+.gitignore

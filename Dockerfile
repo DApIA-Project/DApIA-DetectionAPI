@@ -20,4 +20,4 @@ RUN poetry install $MODE --no-interaction --no-ansi
 EXPOSE 3033
 
 ENTRYPOINT ["poetry"]
-CMD ["run", "python", "-m", "openapi_server"]
+CMD ["run", "python", "-m", "dapia_detection_api"]

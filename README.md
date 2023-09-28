@@ -13,11 +13,7 @@ This server is an API detecting anomalies in a ADS-B message stream.
 ## Generate API
 
 ```shell
-docker run --rm \
-  -v ${PWD}:/local openapitools/openapi-generator-cli generate \
-  -i ./dapia-detection-api \
-  -g python-flask \
-  -o .
+docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli:v7.0.1 generate -i /local/dapia-detection-api.yaml -g python-flask -o /local --package-name dapia_detection_api
 ```
 
 To install the anomaly detection module clone this project : https://github.com/DApIA-Project/Anomaly-Detection.git. \
@@ -28,7 +24,7 @@ file `AircraftClassifier-0.0.1-py3-none-any.whl` with
 python build.py sdist bdist_wheel
 ```
 
-Move `AircraftClassifier-0.0.1-py3-none-any.whl` in `/openapi_server/controllers/` of this project.
+Move `AircraftClassifier-0.0.1-py3-none-any.whl` in `/dapia_detection_api/controllers/` of this project.
 
 And do this when you are not using docker
 
@@ -36,15 +32,15 @@ And do this when you are not using docker
 pip install dist/AircraftClassifier-0.0.1-py3-none-any.whl
 ``` 
 
-in `/openapi_server/controllers/`
+in `/dapia_detection_api/controllers/`
 
 ## Usage
 
 To run the server, please execute the following from the root directory:
 
 ```
-pip3 install -r requirements.txt
-python3 -m openapi_server
+poetry install
+python3 -m dapia_detection_api
 ```
 
 and open your browser to here:
