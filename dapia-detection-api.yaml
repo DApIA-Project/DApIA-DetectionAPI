@@ -4,7 +4,7 @@ info:
   title: API Flask Server for Anomaly Detection
   version: 1.0.0
 servers:
-- url: http://localhost:3002
+- url: http://localhost:3033
 paths:
   /send-message:
     post:

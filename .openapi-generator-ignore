@@ -1,4 +1,5 @@
-/dapia-detection-api/controllers/default_controller.py
+/dapia_detection_api/controllers/default_controller.py
+/dapia_detection_api/__main__.py
 Dockerfile
 README.md
 requirements.txt

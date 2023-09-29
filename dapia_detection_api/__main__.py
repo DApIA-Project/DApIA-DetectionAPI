@@ -12,7 +12,7 @@ def main():
                 arguments={'title': 'API Flask Server for Anomaly Detection'},
                 pythonic_params=True)
 
-    app.run(port=8080)
+    app.run(port=3033)
 
 
 if __name__ == '__main__':
