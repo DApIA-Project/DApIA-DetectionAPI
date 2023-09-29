@@ -3,8 +3,8 @@ dapia_detection_api/controllers/__init__.py
 dapia_detection_api/controllers/security_controller.py
 dapia_detection_api/encoder.py
 dapia_detection_api/models/__init__.py
+dapia_detection_api/models/adsb_message.py
 dapia_detection_api/models/base_model.py
-dapia_detection_api/models/classify_aircraft_request.py
 dapia_detection_api/openapi/openapi.yaml
 dapia_detection_api/test/__init__.py
 dapia_detection_api/typing_utils.py

@@ -2,7 +2,6 @@ import unittest
 
 from flask import json
 
-from dapia_detection_api.models.classify_aircraft_request import ClassifyAircraftRequest  # noqa: E501
 from dapia_detection_api.test import BaseTestCase
 
 
