@@ -28,70 +28,40 @@ def classify_aircraft(body):  # noqa: E501
     if icao not in message_by_icao:
         message_by_icao[icao] = []
     message_by_icao[icao].append(message)
+    messages = message_by_icao[icao][-CONTEXT.HISTORY:]
 
-    messages = message_by_icao[icao]
-    if len(messages) == CONTEXT.HISTORY + 1:
-        df = pd.DataFrame(messages)
-        data = df.values
+    if len(messages) == CONTEXT.HISTORY:
+        df = (pd.DataFrame(messages)
+              .replace('', np.NaN)
+              .fillna(method='ffill')
+              .fillna(method='bfill')
+              .fillna(value=0))
 
-        # Trouver l'indice de chaque colonne
-        # column_indices = {header: index for index, header in enumerate(headers)}
+        try:
+            probability = predictAircraftType(
+                np.array([np.int64(value) for value in df[AdsbMessageField.TIMESTAMP]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.LATITUDE]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.LONGITUDE]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.GROUND_SPEED]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.TRACK]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.VERTICAL_RATE]]).reshape([1, 128]),
+                np.array([np.bool_(value) for value in df[AdsbMessageField.ON_GROUND]]).reshape([1, 128]),
+                np.array([np.bool_(value) for value in df[AdsbMessageField.ALERT]]).reshape([1, 128]),
+                np.array([np.bool_(value) for value in df[AdsbMessageField.SPI]]).reshape([1, 128]),
+                np.array([np.int64(value) for value in df[AdsbMessageField.SQUAWK]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.ALTITUDE]]).reshape([1, 128]),
+                np.array([np.float64(value) for value in df[AdsbMessageField.GEO_ALTITUDE]]).reshape([1, 128])
+            )
 
-        # Convertir les colonnes nécessaires en tableaux NumPy
-        timestamp = [np.int64(row[0]['timestamp']) for row in data]
-        latitude = [np.float64(row[0]['latitude']) for row in data]
-        longitude = [np.float64(row[0]['longitude']) for row in data]
-        ground_speed = [np.float64(row[0]['groundspeed']) for row in data]
-        track = [np.float64(row[0]['track']) for row in data]
-        vertical_rate = [np.float64(row[0]['vertical_rate']) for row in data]
+            max_probability = [probability[np.argmax(np.max(probability, axis=1))]]
+            label = probabilityToLabel(max_probability)
+            name = labelToName(label)
+            print("prediced: ", name[0])
 
-        on_ground = [True if row[0]['onground'] == 'True' else False for row in data]
-        alert = [True if row[0]['alert'] == 'True' else False for row in data]
-        spi = [True if row[0]['spi'] == 'True' else False for row in data]
+            response = {'message': message, 'prediction': name[0]}
+        except Exception as e:
+            response = {'message': message, 'error': f'{e}'}, 500
 
-        squawk = [int(row[0]['squawk']) if row[0]['squawk'] and row[0]['squawk'] != 'NaN' else None for row in
-                 data]
-        altitude = [np.float64(row[0]['altitude']) for row in data]
-        geo_altitude = [np.float64(row[0]['geoaltitude']) for row in data]
-
-        timestamp = [timestamp[i:i + CONTEXT.HISTORY] for i in range(0, len(timestamp) - CONTEXT.HISTORY, 1)]
-        latitude = [latitude[i:i + CONTEXT.HISTORY] for i in range(0, len(latitude) - CONTEXT.HISTORY, 1)]
-        longitude = [longitude[i:i + CONTEXT.HISTORY] for i in range(0, len(longitude) - CONTEXT.HISTORY, 1)]
-        ground_speed = [ground_speed[i:i + CONTEXT.HISTORY] for i in
-                       range(0, len(ground_speed) - CONTEXT.HISTORY, 1)]
-        track = [track[i:i + CONTEXT.HISTORY] for i in range(0, len(track) - CONTEXT.HISTORY, 1)]
-        vertical_rate = [vertical_rate[i:i + CONTEXT.HISTORY] for i in
-                        range(0, len(vertical_rate) - CONTEXT.HISTORY, 1)]
-        on_ground = [on_ground[i:i + CONTEXT.HISTORY] for i in range(0, len(on_ground) - CONTEXT.HISTORY, 1)]
-        alert = [alert[i:i + CONTEXT.HISTORY] for i in range(0, len(alert) - CONTEXT.HISTORY, 1)]
-        spi = [spi[i:i + CONTEXT.HISTORY] for i in range(0, len(spi) - CONTEXT.HISTORY, 1)]
-        squawk = [squawk[i:i + CONTEXT.HISTORY] for i in range(0, len(squawk) - CONTEXT.HISTORY, 1)]
-        altitude = [altitude[i:i + CONTEXT.HISTORY] for i in range(0, len(altitude) - CONTEXT.HISTORY, 1)]
-        geo_altitude = [geo_altitude[i:i + CONTEXT.HISTORY] for i in
-                       range(0, len(geo_altitude) - CONTEXT.HISTORY, 1)]
-
-        proba = predictAircraftType(
-            timestamp,
-            latitude,
-            longitude,
-            ground_speed,
-            track,
-            vertical_rate,
-            on_ground,
-            alert,
-            spi,
-            squawk,
-            altitude,
-            geo_altitude
-        )
-
-        max_proba = [proba[np.argmax(np.max(proba, axis=1))]]
-        label = probabilityToLabel(max_proba)
-        name = labelToName(label)
-        print("prediced : ", name[0])
-
-        messages.pop(0)
-
-        return {'message': message, 'prediction': name[0]}
+        return response
     else:
         return {'message': message, 'prediction': "Not available"}
