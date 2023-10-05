@@ -52,16 +52,18 @@ def classify_aircraft(body):  # noqa: E501
                 np.array([np.float64(value) for value in df[AdsbMessageField.ALTITUDE]]).reshape([1, 128]),
                 np.array([np.float64(value) for value in df[AdsbMessageField.GEO_ALTITUDE]]).reshape([1, 128])
             )
-
-            max_probability = [probability[np.argmax(np.max(probability, axis=1))]]
-            label = probabilityToLabel(max_probability)
-            name = labelToName(label)
-            print("prediced: ", name[0])
-
-            response = {'message': message, 'prediction': name[0]}
+            response = {'message': message, 'prediction': probability_to_name(probability)}
         except Exception as e:
             response = {'message': message, 'error': f'{e}'}, 500
 
         return response
     else:
         return {'message': message, 'prediction': "Not available"}
+
+
+def probability_to_name(probability):
+    label = probabilityToLabel(probability)
+    name = labelToName(label)
+    if len(name) > 0:
+        return name[0]
+    return 'Unavailable'
