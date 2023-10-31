@@ -13,35 +13,151 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/adsb_message'
+              $ref: '#/components/schemas/classify_aircraft_request'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/_classify_aircraft_200_response'
+                $ref: '#/components/schemas/Response_200_Classify_Aircraft'
           description: The message was successfully sent to the server.
       summary: Send a message ADS-B to the server.
       x-openapi-router-controller: dapia_detection_api.controllers.default_controller
 components:
   schemas:
-    _classify_aircraft_200_response:
-      description: The type of aircraft.
-      example: HELICOPTER
+    aircraft_types:
+      enum:
+      - HELICOPTER
+      - PLANE
+      - LIGHT
+      title: Aircraft type
       type: string
     adsb_message:
+      description: An ADS-B message
+      example:
+        timestamp: "1656766055"
+        icao24: 3b7b96
+        latitude: "43.40913391113281"
+        longitude: "1.724150901617006"
+        groundspeed: "120.0"
+        track: "311.2759420272517"
+        vertical_rate: "128.0"
+        callsign: DRAG66
+        onground: "False"
+        alert: "False"
+        spi: "False"
+        squawk: NaN
+        altitude: "1850.0"
+        geoaltitude: "1850.0"
+        last_position: ""
+        lastcontact: ""
+        hour: ""
+      title: ADS-B message
+      type: object
+    classify_aircraft_request:
       properties:
         message:
           description: An ADS-B message
-          example: "[{\"timestamp\":\"1656766055\",\"icao24\":\"3b7b96\",\"latitude\"\
-            :\"43.40913391113281\",\"longitude\":\"1.724150901617006\",\"groundspeed\"\
-            :\"120.0\",\"track\":\"311.2759420272517\",\"vertical_rate\":\"128.0\"\
-            ,\"callsign\":\"DRAG66\",\"onground\":\"False\",\"alert\":\"False\",\"\
-            spi\":\"False\",\"squawk\":\"NaN\",\"altitude\":\"1850.0\",\"geoaltitude\"\
-            :\"1850.0\",\"last_position\":\"\",\"lastcontact\":\"\",\"hour\":\"\"\
-            }]"
-          title: message
+          example:
+            timestamp: "1656766055"
+            icao24: 3b7b96
+            latitude: "43.40913391113281"
+            longitude: "1.724150901617006"
+            groundspeed: "120.0"
+            track: "311.2759420272517"
+            vertical_rate: "128.0"
+            callsign: DRAG66
+            onground: "False"
+            alert: "False"
+            spi: "False"
+            squawk: NaN
+            altitude: "1850.0"
+            geoaltitude: "1850.0"
+            last_position: ""
+            lastcontact: ""
+            hour: ""
+          title: ADS-B message
           type: object
-      title: ADS-B message
+      title: classify_aircraft_request
+      type: object
+    data:
+      description: "The message, the prediction and the real type."
+      example:
+        truth: null
+        prediction: null
+        message:
+          timestamp: "1656766055"
+          icao24: 3b7b96
+          latitude: "43.40913391113281"
+          longitude: "1.724150901617006"
+          groundspeed: "120.0"
+          track: "311.2759420272517"
+          vertical_rate: "128.0"
+          callsign: DRAG66
+          onground: "False"
+          alert: "False"
+          spi: "False"
+          squawk: NaN
+          altitude: "1850.0"
+          geoaltitude: "1850.0"
+          last_position: ""
+          lastcontact: ""
+          hour: ""
+      properties:
+        message:
+          description: An ADS-B message
+          example:
+            timestamp: "1656766055"
+            icao24: 3b7b96
+            latitude: "43.40913391113281"
+            longitude: "1.724150901617006"
+            groundspeed: "120.0"
+            track: "311.2759420272517"
+            vertical_rate: "128.0"
+            callsign: DRAG66
+            onground: "False"
+            alert: "False"
+            spi: "False"
+            squawk: NaN
+            altitude: "1850.0"
+            geoaltitude: "1850.0"
+            last_position: ""
+            lastcontact: ""
+            hour: ""
+          title: ADS-B message
+          type: object
+        prediction:
+          $ref: '#/components/schemas/aircraft_types'
+        truth:
+          $ref: '#/components/schemas/aircraft_types'
+      title: data
+      type: object
+    Response_200_Classify_Aircraft:
+      example:
+        data:
+          truth: null
+          prediction: null
+          message:
+            timestamp: "1656766055"
+            icao24: 3b7b96
+            latitude: "43.40913391113281"
+            longitude: "1.724150901617006"
+            groundspeed: "120.0"
+            track: "311.2759420272517"
+            vertical_rate: "128.0"
+            callsign: DRAG66
+            onground: "False"
+            alert: "False"
+            spi: "False"
+            squawk: NaN
+            altitude: "1850.0"
+            geoaltitude: "1850.0"
+            last_position: ""
+            lastcontact: ""
+            hour: ""
+      properties:
+        data:
+          $ref: '#/components/schemas/data'
+      title: Response 200 Classify Aircraft
       type: object

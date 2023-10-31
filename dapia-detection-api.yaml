@@ -13,29 +13,43 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/adsb_message'
+              type: object
+              properties:
+                message:
+                  $ref: '#/components/schemas/adsb_message'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/_classify_aircraft_200_response'
+                title: Response 200 Classify Aircraft
+                type: object
+                properties:
+                  data:
+                    description: The message, the prediction and the real type.
+                    properties:
+                      message:
+                        $ref: '#/components/schemas/adsb_message'
+                      prediction:
+                        $ref: '#/components/schemas/aircraft_types'
+                      truth:
+                        $ref: '#/components/schemas/aircraft_types'
+                    title: data
+                    type: object
           description: The message was successfully sent to the server.
       summary: Send a message ADS-B to the server.
       x-openapi-router-controller: dapia_detection_api.controllers.default_controller
 components:
   schemas:
-    _classify_aircraft_200_response:
-      type: string
-      example: "HELICOPTER"
-      description: The type of aircraft.
+    aircraft_types:
+      title: "Aircraft type"
+      enum:
+        - "HELICOPTER"
+        - "PLANE"
+        - "LIGHT"
     adsb_message:
       title: "ADS-B message"
       type: object
-      properties:
-        message:
-          description: An ADS-B message
-          example: '[{"timestamp":"1656766055","icao24":"3b7b96","latitude":"43.40913391113281","longitude":"1.724150901617006","groundspeed":"120.0","track":"311.2759420272517","vertical_rate":"128.0","callsign":"DRAG66","onground":"False","alert":"False","spi":"False","squawk":"NaN","altitude":"1850.0","geoaltitude":"1850.0","last_position":"","lastcontact":"","hour":""}]'
-          title: message
-          type: object
+      description: An ADS-B message
+      example: {"timestamp":"1656766055","icao24":"3b7b96","latitude":"43.40913391113281","longitude":"1.724150901617006","groundspeed":"120.0","track":"311.2759420272517","vertical_rate":"128.0","callsign":"DRAG66","onground":"False","alert":"False","spi":"False","squawk":"NaN","altitude":"1850.0","geoaltitude":"1850.0","last_position":"","lastcontact":"","hour":""}
