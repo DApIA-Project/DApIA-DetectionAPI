@@ -21,6 +21,9 @@ jobs:
     - name: Installation de numpy
       run: pip install numpy
 
+    - name: Installation de AdsbAnomalyDetector
+      run: pip install AdsbAnomalyDetector
+
     - name: Installation de Poetry
       run: |
         pip install poetry
