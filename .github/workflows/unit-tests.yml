@@ -24,6 +24,15 @@ jobs:
     - name: Installation de AdsbAnomalyDetector
       run: pip install AdsbAnomalyDetector
 
+    - name: Installation de logging
+      run: pip install logging
+
+    - name: Installation de connexion
+      run: pip install connexion
+
+    - name: Installation de flask_testing
+      run: pip install flask_testing
+
     - name: Installation de Poetry
       run: |
         pip install poetry
