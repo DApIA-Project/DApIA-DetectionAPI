@@ -1,8 +1,4 @@
 import unittest
-
-from flask import json
-
-import dapia_detection_api
 from dapia_detection_api.controllers.default_controller import classify_aircraft
 from dapia_detection_api.test import BaseTestCase
 
