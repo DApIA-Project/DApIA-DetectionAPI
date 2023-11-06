@@ -18,6 +18,13 @@ jobs:
       with:
         python-version: 3.11.5
 
+    - name: Installation de Poetry
+      run: |
+        pip install poetry
+        poetry install
+      env:
+        POETRY_VIRTUALENV_IN_PROJECT: true
+
     - name: Exécution des tests
       run: python -m unittest discover -s ./dapia_detection_api/test/
 
