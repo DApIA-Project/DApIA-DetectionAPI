@@ -17,7 +17,9 @@ python-dateutil = "^2.8.2"
 swagger-ui-bundle = "0.0.2"
 connexion = {version = "^2.6.0", extras = ["swagger-ui"]}
 tensorflow-io-gcs-filesystem = "0.31.0"
-aircraftclassifier = {file = "./lib/AircraftClassifier-0.0.1-py3-none-any.whl"}
+adsbanomalydetector = "0.1.3"
+testcase = "^0.1.0"
+flask-testing = "^0.8.1"
 
 [build-system]
 requires = ["poetry-core"]

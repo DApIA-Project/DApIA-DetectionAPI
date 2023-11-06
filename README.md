@@ -16,6 +16,17 @@ This server is an API detecting anomalies in a ADS-B message stream.
 ```shell
 docker run --rm -v ${PWD}:/local openapitools/openapi-generator-cli:v7.0.1 generate -i /local/dapia-detection-api.yaml -g python-flask -o /local --package-name dapia_detection_api
 ```
+### Windows
+The command above must be carried out in a Windows Powershell
+
+### Linux
+Not yet tested
+
+## File Paths Over 260 Characters and manually install tensorflow 
+If you have a Windows Home edition, you will have to edit the Windows Registry to remove the 260 Character Path Limit and you have to manually install tensorflow.
+A solution to this problem was found in this GitHub solution :
+https://github.com/tensorflow/tensorflow/issues/46934#issuecomment-1104673795
+
 
 ## Install dependencies
 
