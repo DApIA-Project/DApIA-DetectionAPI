@@ -18,21 +18,6 @@ jobs:
       with:
         python-version: 3.11.5
 
-    - name: Installation de numpy
-      run: pip install numpy
-
-    - name: Installation de AdsbAnomalyDetector
-      run: pip install AdsbAnomalyDetector
-
-    - name: Installation de logging
-      run: pip install logging
-
-    - name: Installation de connexion
-      run: pip install connexion
-
-    - name: Installation de flask_testing
-      run: pip install flask_testing
-
     - name: Installation de Poetry
       run: |
         pip install poetry
@@ -41,5 +26,5 @@ jobs:
         POETRY_VIRTUALENV_IN_PROJECT: true
 
     - name: Exécution des tests
-      run: python -m unittest discover -s ./dapia_detection_api/test/
+      run: poetry run python -m unittest discover -s ./dapia_detection_api/test/
 
