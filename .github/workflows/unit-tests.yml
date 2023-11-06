@@ -1,4 +1,4 @@
-name: Python Tests
+name: Python Unit Tests
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:

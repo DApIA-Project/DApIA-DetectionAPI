@@ -1,3 +1,6 @@
+![DetectionAPI Unit Tests workflow](https://github.com/DApIA-Project/DApIA-DetectionAPI/actions/workflows/unit-tests.yml/badge.svg)
+
+
 # DApIA Detection API
 
 ## Overview
