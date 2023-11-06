@@ -4,11 +4,7 @@ from AdsbAnomalyDetector import predictAircraftType, probabilityToLabel, labelTo
 from dapia_detection_api.types.fields import AdsbMessageField
 
 message_by_icao = {}
-dtype = np.dtype([('timestamp', np.int64), ('icao24', 'U6'), ('latitude', np.float64), ('longitude', np.float64),
-                  ('groundspeed', np.float64), ('track', np.float64), ('vertical_rate', np.float64),
-                  ('callsign', 'U10'), ('onground', bool), ('alert', bool), ('spi', bool), ('squawk', np.float64),
-                  ('altitude', np.float64), ('geoaltitude', np.float64), ('last_position', np.float64),
-                  ('lastcontact', np.float64), ('hour', np.int64)])
+
 
 
 def classify_aircraft(body):  # noqa: E501

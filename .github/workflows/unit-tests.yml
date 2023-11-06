@@ -18,6 +18,9 @@ jobs:
       with:
         python-version: 3.11.5
 
+    - name: Installation de numpy
+      run: pip install numpy
+
     - name: Installation de Poetry
       run: |
         pip install poetry
