@@ -1,18 +1,18 @@
 import unittest
-from dapia_detection_api.controllers.default_controller import classify_aircraft, classify_aircrafts
+from dapia_detection_api.controllers.default_controller import classify_aircrafts
 from dapia_detection_api.test import BaseTestCase
 
 
 class TestDefaultController(BaseTestCase):
     """DefaultController integration test stubs"""
 
-    def test_classify_aircraft_valid(self):
+    def test_classify_aircrafts_valid(self):
         """Test case for classify_aircraft
 
         Send a message ADS-B to the server.
         """
         example_message = {
-            'message': {
+            'message': [{
             'timestamp': '1656652128',
             'icao24': '39ac45',
             'latitude': '43.61274331302966',
@@ -30,10 +30,10 @@ class TestDefaultController(BaseTestCase):
             'last_position': '',
             'lastcontact': '',
             'hour': '',
-    }
+    }]
         }
         # Appelez votre fonction de classification
-        result = classify_aircraft(example_message)
+        result = classify_aircrafts(example_message)
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0]['message'], example_message['message'])
@@ -42,13 +42,13 @@ class TestDefaultController(BaseTestCase):
         self.assertEqual(result[1],200)
 
 
-    def test_classify_aircraft_valid_truth_unknown(self):
+    def test_classify_aircrafts_valid_truth_unknown(self):
         """Test case for classify_aircraft
 
         Send a message ADS-B to the server.
         """
         example_message = {
-            'message': {
+            'message': [{
                 'timestamp': '1656652128',
                 'icao24': '',
                 'latitude': '43.61274331302966',
@@ -66,10 +66,10 @@ class TestDefaultController(BaseTestCase):
                 'last_position': '',
                 'lastcontact': '',
                 'hour': '',
-            }
+            }]
         }
         # Appelez votre fonction de classification
-        result = classify_aircraft(example_message)
+        result = classify_aircrafts(example_message)
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0]['message'], example_message['message'])
@@ -78,13 +78,13 @@ class TestDefaultController(BaseTestCase):
         self.assertEqual(result[1],200)
 
 
-    def test_classify_aircraft_invalid_missing_icao(self):
+    def test_classify_aircrafts_invalid_missing_icao(self):
         """Test case for classify_aircraft
 
         Send a message ADS-B to the server.
         """
         example_message = {
-            'message': {
+            'message': [{
                 'timestamp': '1656652128',
                 'latitude': '43.61274331302966',
                 'longitude': '1.4005606515066964',
@@ -101,17 +101,17 @@ class TestDefaultController(BaseTestCase):
                 'last_position': '',
                 'lastcontact': '',
                 'hour': '',
-            }
+            }]
         }
         # Appelez votre fonction de classification
-        result = classify_aircraft(example_message)
+        result = classify_aircrafts(example_message)
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0]['message'], example_message['message'])
         self.assertEqual(result[0]['error'], "<AdsbMessageField.ICAO: 'icao24'>")
         self.assertEqual(result[1],500)
 
-    def test_classify_aircrafts_valid(self):
+    def test_classify_aircrafts_valid2(self):
         """Test case for classify_aircrafts
 
         Send an array message ADS-B to the server.
@@ -333,7 +333,7 @@ class TestDefaultController(BaseTestCase):
         self.assertEqual(result[0]['truth'], 'UNKNOWN')
         self.assertEqual(result[1], 200)
 
-    def test_classify_aircrafts_valid2(self):
+    def test_classify_aircrafts_valid3(self):
         """Test case for classify_aircrafts
 
         Send an array message ADS-B to the server.

@@ -8,25 +8,6 @@ servers:
 paths:
   /classifier:
     post:
-      operationId: classify_aircraft
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message:
-                  $ref: '#/components/schemas/adsb_message'
-        required: true
-      responses:
-        "200":
-          $ref : '#/components/responses/Response200ClassifyAircraft'
-        "500":
-          $ref : '#/components/responses/Response500ClassifyAircraft'
-      summary: Send a message ADS-B to the server.
-      x-openapi-router-controller: dapia_detection_api.controllers.default_controller
-  /classifier_many:
-    post:
       operationId: classify_aircrafts
       requestBody:
         content:

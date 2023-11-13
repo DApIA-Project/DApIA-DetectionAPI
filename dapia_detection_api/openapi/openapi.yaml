@@ -8,30 +8,6 @@ servers:
 paths:
   /classifier:
     post:
-      operationId: classify_aircraft
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/classify_aircraft_request'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response_200_Classify_Aircraft'
-          description: The messages were successfully sent to the server.
-        "500":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Response_500_Classify_Aircraft'
-          description: The messages could not be processed by the server.
-      summary: Send a message ADS-B to the server.
-      x-openapi-router-controller: dapia_detection_api.controllers.default_controller
-  /classifier_many:
-    post:
       operationId: classify_aircrafts
       requestBody:
         content:
@@ -107,31 +83,14 @@ components:
         hour: ""
       title: ADS-B message
       type: object
-    classify_aircraft_request:
+    classify_aircrafts_request:
       properties:
         message:
-          description: An ADS-B message
-          example:
-            timestamp: "1656766055"
-            icao24: 3b7b96
-            latitude: "43.40913391113281"
-            longitude: "1.724150901617006"
-            groundspeed: "120.0"
-            track: "311.2759420272517"
-            vertical_rate: "128.0"
-            callsign: DRAG66
-            onground: "False"
-            alert: "False"
-            spi: "False"
-            squawk: NaN
-            altitude: "1850.0"
-            geoaltitude: "1850.0"
-            last_position: ""
-            lastcontact: ""
-            hour: ""
-          title: ADS-B message
-          type: object
-      title: classify_aircraft_request
+          items:
+            $ref: '#/components/schemas/adsb_message'
+          title: message
+          type: array
+      title: classify_aircrafts_request
       type: object
     data:
       description: "The messages, predictions, and real types."
@@ -263,13 +222,4 @@ components:
         data:
           $ref: '#/components/schemas/data_1'
       title: Response 500 Classify Aircraft
-      type: object
-    classify_aircrafts_request:
-      properties:
-        message:
-          items:
-            $ref: '#/components/schemas/adsb_message'
-          title: message
-          type: array
-      title: classify_aircrafts_request
       type: object
