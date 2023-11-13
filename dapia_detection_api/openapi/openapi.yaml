@@ -21,16 +21,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response_200_Classify_Aircraft'
-          description: The message was successfully sent to the server.
+          description: The messages were successfully sent to the server.
         "500":
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Response_500_Classify_Aircraft'
-          description: The message could not be processed by the server.
+          description: The messages could not be processed by the server.
       summary: Send a message ADS-B to the server.
       x-openapi-router-controller: dapia_detection_api.controllers.default_controller
+  /classifier_many:
+    post:
+      operationId: classify_aircrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/classify_aircrafts_request'
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_200_Classify_Aircraft'
+          description: The messages were successfully sent to the server.
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response_500_Classify_Aircraft'
+          description: The messages could not be processed by the server.
+      summary: Send an array of ADS-B messages to the server.
+      x-openapi-router-controller: dapia_detection_api.controllers.default_controller
 components:
+  responses:
+    Response200ClassifyAircraft:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response_200_Classify_Aircraft'
+      description: The messages were successfully sent to the server.
+    Response500ClassifyAircraft:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Response_500_Classify_Aircraft'
+      description: The messages could not be processed by the server.
   schemas:
     aircraft_types:
       enum:
@@ -98,12 +134,13 @@ components:
       title: classify_aircraft_request
       type: object
     data:
-      description: "The message, the prediction and the real type."
+      description: "The messages, predictions, and real types."
       example:
-        truth: null
-        prediction: null
-        message:
-          timestamp: "1656766055"
+        truths:
+        - null
+        - null
+        messages:
+        - timestamp: "1656766055"
           icao24: 3b7b96
           latitude: "43.40913391113281"
           longitude: "1.724150901617006"
@@ -120,42 +157,52 @@ components:
           last_position: ""
           lastcontact: ""
           hour: ""
+        - timestamp: "1656766055"
+          icao24: 3b7b96
+          latitude: "43.40913391113281"
+          longitude: "1.724150901617006"
+          groundspeed: "120.0"
+          track: "311.2759420272517"
+          vertical_rate: "128.0"
+          callsign: DRAG66
+          onground: "False"
+          alert: "False"
+          spi: "False"
+          squawk: NaN
+          altitude: "1850.0"
+          geoaltitude: "1850.0"
+          last_position: ""
+          lastcontact: ""
+          hour: ""
+        predictions:
+        - null
+        - null
       properties:
-        message:
-          description: An ADS-B message
-          example:
-            timestamp: "1656766055"
-            icao24: 3b7b96
-            latitude: "43.40913391113281"
-            longitude: "1.724150901617006"
-            groundspeed: "120.0"
-            track: "311.2759420272517"
-            vertical_rate: "128.0"
-            callsign: DRAG66
-            onground: "False"
-            alert: "False"
-            spi: "False"
-            squawk: NaN
-            altitude: "1850.0"
-            geoaltitude: "1850.0"
-            last_position: ""
-            lastcontact: ""
-            hour: ""
-          title: ADS-B message
-          type: object
-        prediction:
-          $ref: '#/components/schemas/aircraft_types'
-        truth:
-          $ref: '#/components/schemas/aircraft_types'
+        messages:
+          items:
+            $ref: '#/components/schemas/adsb_message'
+          title: messages
+          type: array
+        predictions:
+          items:
+            $ref: '#/components/schemas/aircraft_types'
+          title: predictions
+          type: array
+        truths:
+          items:
+            $ref: '#/components/schemas/aircraft_types'
+          title: truths
+          type: array
       title: data
       type: object
     Response_200_Classify_Aircraft:
       example:
         data:
-          truth: null
-          prediction: null
-          message:
-            timestamp: "1656766055"
+          truths:
+          - null
+          - null
+          messages:
+          - timestamp: "1656766055"
             icao24: 3b7b96
             latitude: "43.40913391113281"
             longitude: "1.724150901617006"
@@ -172,36 +219,39 @@ components:
             last_position: ""
             lastcontact: ""
             hour: ""
+          - timestamp: "1656766055"
+            icao24: 3b7b96
+            latitude: "43.40913391113281"
+            longitude: "1.724150901617006"
+            groundspeed: "120.0"
+            track: "311.2759420272517"
+            vertical_rate: "128.0"
+            callsign: DRAG66
+            onground: "False"
+            alert: "False"
+            spi: "False"
+            squawk: NaN
+            altitude: "1850.0"
+            geoaltitude: "1850.0"
+            last_position: ""
+            lastcontact: ""
+            hour: ""
+          predictions:
+          - null
+          - null
       properties:
         data:
           $ref: '#/components/schemas/data'
       title: Response 200 Classify Aircraft
       type: object
     data_1:
-      description: The message and the error.
+      description: The messages and the error.
       properties:
-        message:
-          description: An ADS-B message
-          example:
-            timestamp: "1656766055"
-            icao24: 3b7b96
-            latitude: "43.40913391113281"
-            longitude: "1.724150901617006"
-            groundspeed: "120.0"
-            track: "311.2759420272517"
-            vertical_rate: "128.0"
-            callsign: DRAG66
-            onground: "False"
-            alert: "False"
-            spi: "False"
-            squawk: NaN
-            altitude: "1850.0"
-            geoaltitude: "1850.0"
-            last_position: ""
-            lastcontact: ""
-            hour: ""
-          title: ADS-B message
-          type: object
+        messages:
+          items:
+            $ref: '#/components/schemas/adsb_message'
+          title: messages
+          type: array
         error:
           description: Error name found
           title: error
@@ -213,4 +263,13 @@ components:
         data:
           $ref: '#/components/schemas/data_1'
       title: Response 500 Classify Aircraft
+      type: object
+    classify_aircrafts_request:
+      properties:
+        message:
+          items:
+            $ref: '#/components/schemas/adsb_message'
+          title: message
+          type: array
+      title: classify_aircrafts_request
       type: object

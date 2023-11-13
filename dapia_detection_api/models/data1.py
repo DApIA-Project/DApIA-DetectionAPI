@@ -12,25 +12,25 @@ class Data1(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, message=None, error=None):  # noqa: E501
+    def __init__(self, messages=None, error=None):  # noqa: E501
         """Data1 - a model defined in OpenAPI
 
-        :param message: The message of this Data1.  # noqa: E501
-        :type message: object
+        :param messages: The messages of this Data1.  # noqa: E501
+        :type messages: List[object]
         :param error: The error of this Data1.  # noqa: E501
         :type error: str
         """
         self.openapi_types = {
-            'message': object,
+            'messages': List[object],
             'error': str
         }
 
         self.attribute_map = {
-            'message': 'message',
+            'messages': 'messages',
             'error': 'error'
         }
 
-        self._message = message
+        self._messages = messages
         self._error = error
 
     @classmethod
@@ -45,27 +45,25 @@ class Data1(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def message(self) -> object:
-        """Gets the message of this Data1.
+    def messages(self) -> List[object]:
+        """Gets the messages of this Data1.
 
-        An ADS-B message  # noqa: E501
 
-        :return: The message of this Data1.
-        :rtype: object
+        :return: The messages of this Data1.
+        :rtype: List[object]
         """
-        return self._message
+        return self._messages
 
-    @message.setter
-    def message(self, message: object):
-        """Sets the message of this Data1.
+    @messages.setter
+    def messages(self, messages: List[object]):
+        """Sets the messages of this Data1.
 
-        An ADS-B message  # noqa: E501
 
-        :param message: The message of this Data1.
-        :type message: object
+        :param messages: The messages of this Data1.
+        :type messages: List[object]
         """
 
-        self._message = message
+        self._messages = messages
 
     @property
     def error(self) -> str:

@@ -14,31 +14,31 @@ class Data(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, message=None, prediction=None, truth=None):  # noqa: E501
+    def __init__(self, messages=None, predictions=None, truths=None):  # noqa: E501
         """Data - a model defined in OpenAPI
 
-        :param message: The message of this Data.  # noqa: E501
-        :type message: object
-        :param prediction: The prediction of this Data.  # noqa: E501
-        :type prediction: AircraftTypes
-        :param truth: The truth of this Data.  # noqa: E501
-        :type truth: AircraftTypes
+        :param messages: The messages of this Data.  # noqa: E501
+        :type messages: List[object]
+        :param predictions: The predictions of this Data.  # noqa: E501
+        :type predictions: List[AircraftTypes]
+        :param truths: The truths of this Data.  # noqa: E501
+        :type truths: List[AircraftTypes]
         """
         self.openapi_types = {
-            'message': object,
-            'prediction': AircraftTypes,
-            'truth': AircraftTypes
+            'messages': List[object],
+            'predictions': List[AircraftTypes],
+            'truths': List[AircraftTypes]
         }
 
         self.attribute_map = {
-            'message': 'message',
-            'prediction': 'prediction',
-            'truth': 'truth'
+            'messages': 'messages',
+            'predictions': 'predictions',
+            'truths': 'truths'
         }
 
-        self._message = message
-        self._prediction = prediction
-        self._truth = truth
+        self._messages = messages
+        self._predictions = predictions
+        self._truths = truths
 
     @classmethod
     def from_dict(cls, dikt) -> 'Data':
@@ -52,66 +52,64 @@ class Data(Model):
         return util.deserialize_model(dikt, cls)
 
     @property
-    def message(self) -> object:
-        """Gets the message of this Data.
+    def messages(self) -> List[object]:
+        """Gets the messages of this Data.
 
-        An ADS-B message  # noqa: E501
 
-        :return: The message of this Data.
-        :rtype: object
+        :return: The messages of this Data.
+        :rtype: List[object]
         """
-        return self._message
+        return self._messages
 
-    @message.setter
-    def message(self, message: object):
-        """Sets the message of this Data.
+    @messages.setter
+    def messages(self, messages: List[object]):
+        """Sets the messages of this Data.
 
-        An ADS-B message  # noqa: E501
 
-        :param message: The message of this Data.
-        :type message: object
+        :param messages: The messages of this Data.
+        :type messages: List[object]
         """
 
-        self._message = message
+        self._messages = messages
 
     @property
-    def prediction(self) -> AircraftTypes:
-        """Gets the prediction of this Data.
+    def predictions(self) -> List[AircraftTypes]:
+        """Gets the predictions of this Data.
 
 
-        :return: The prediction of this Data.
-        :rtype: AircraftTypes
+        :return: The predictions of this Data.
+        :rtype: List[AircraftTypes]
         """
-        return self._prediction
+        return self._predictions
 
-    @prediction.setter
-    def prediction(self, prediction: AircraftTypes):
-        """Sets the prediction of this Data.
+    @predictions.setter
+    def predictions(self, predictions: List[AircraftTypes]):
+        """Sets the predictions of this Data.
 
 
-        :param prediction: The prediction of this Data.
-        :type prediction: AircraftTypes
+        :param predictions: The predictions of this Data.
+        :type predictions: List[AircraftTypes]
         """
 
-        self._prediction = prediction
+        self._predictions = predictions
 
     @property
-    def truth(self) -> AircraftTypes:
-        """Gets the truth of this Data.
+    def truths(self) -> List[AircraftTypes]:
+        """Gets the truths of this Data.
 
 
-        :return: The truth of this Data.
-        :rtype: AircraftTypes
+        :return: The truths of this Data.
+        :rtype: List[AircraftTypes]
         """
-        return self._truth
+        return self._truths
 
-    @truth.setter
-    def truth(self, truth: AircraftTypes):
-        """Sets the truth of this Data.
+    @truths.setter
+    def truths(self, truths: List[AircraftTypes]):
+        """Sets the truths of this Data.
 
 
-        :param truth: The truth of this Data.
-        :type truth: AircraftTypes
+        :param truths: The truths of this Data.
+        :type truths: List[AircraftTypes]
         """
 
-        self._truth = truth
+        self._truths = truths

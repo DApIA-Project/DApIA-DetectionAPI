@@ -20,43 +20,30 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                title: Response 200 Classify Aircraft
-                type: object
-                properties:
-                  data:
-                    description: The message, the prediction and the real type.
-                    properties:
-                      message:
-                        $ref: '#/components/schemas/adsb_message'
-                      prediction:
-                        $ref: '#/components/schemas/aircraft_types'
-                      truth:
-                        $ref: '#/components/schemas/aircraft_types'
-                    title: data
-                    type: object
-          description: The message was successfully sent to the server.
+          $ref : '#/components/responses/Response200ClassifyAircraft'
         "500":
-          content:
-            application/json:
-              schema:
-                title: Response 500 Classify Aircraft
-                type: object
-                properties:
-                  data:
-                    description: The message and the error.
-                    properties:
-                      message:
-                        $ref: '#/components/schemas/adsb_message'
-                      error:
-                        type: string
-                        description: Error name found
-                    title: data
-                    type: object
-          description: The message could not be processed by the server.
+          $ref : '#/components/responses/Response500ClassifyAircraft'
       summary: Send a message ADS-B to the server.
+      x-openapi-router-controller: dapia_detection_api.controllers.default_controller
+  /classifier_many:
+    post:
+      operationId: classify_aircrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/adsb_message'
+      responses:
+        "200":
+          $ref: '#/components/responses/Response200ClassifyAircraft'
+        "500":
+          $ref: '#/components/responses/Response500ClassifyAircraft'
+      summary: Send an array of ADS-B messages to the server.
       x-openapi-router-controller: dapia_detection_api.controllers.default_controller
 components:
   schemas:
@@ -81,3 +68,50 @@ components:
       type: object
       description: An ADS-B message
       example: {"timestamp":"1656766055","icao24":"3b7b96","latitude":"43.40913391113281","longitude":"1.724150901617006","groundspeed":"120.0","track":"311.2759420272517","vertical_rate":"128.0","callsign":"DRAG66","onground":"False","alert":"False","spi":"False","squawk":"NaN","altitude":"1850.0","geoaltitude":"1850.0","last_position":"","lastcontact":"","hour":""}
+  responses:
+    Response200ClassifyAircraft:
+      description: The messages were successfully sent to the server.
+      content:
+        application/json:
+          schema:
+            title: Response 200 Classify Aircraft
+            type: object
+            properties:
+              data:
+                description: The messages, predictions, and real types.
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/adsb_message'
+                  predictions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aircraft_types'
+                  truths:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aircraft_types'
+                title: data
+                type: object
+
+    Response500ClassifyAircraft:
+      description: The messages could not be processed by the server.
+      content:
+        application/json:
+          schema:
+            title: Response 500 Classify Aircraft
+            type: object
+            properties:
+              data:
+                description: The messages and the error.
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/adsb_message'
+                  error:
+                    type: string
+                    description: Error name found
+                title: data
+                type: object

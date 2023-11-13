@@ -1,5 +1,5 @@
 import unittest
-from dapia_detection_api.controllers.default_controller import classify_aircraft
+from dapia_detection_api.controllers.default_controller import classify_aircraft, classify_aircrafts
 from dapia_detection_api.test import BaseTestCase
 
 
@@ -111,6 +111,284 @@ class TestDefaultController(BaseTestCase):
         self.assertEqual(result[0]['error'], "<AdsbMessageField.ICAO: 'icao24'>")
         self.assertEqual(result[1],500)
 
+    def test_classify_aircrafts_valid(self):
+        """Test case for classify_aircrafts
+
+        Send an array message ADS-B to the server.
+        """
+        example_message = {
+            'message': [
+                {
+                    'timestamp': '1481274814',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '416.8',
+                    'track': '321.2',
+                    'vertical_rate': '-1408',
+                    'callsign': '',
+                    'onground': '',
+                    'alert': '',
+                    'spi': '',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274814',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274814',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                }
+            ]
+        }
+        # Appelez votre fonction de classification
+        result = classify_aircrafts(example_message)
+
+        # Vérifiez si le résultat est correct
+        self.assertEqual(result[0]['message'], example_message['message'])
+        self.assertEqual(result[0]['prediction'], 'PLANE')
+        self.assertEqual(result[0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[1],200)
+
+    def test_classify_aircrafts_no_valid_missing_icao_first_message(self):
+        """Test case for classify_aircrafts
+
+        Send an array message ADS-B to the server.
+        """
+        example_message = {
+            'message': [
+                {
+                    'timestamp': '1481274815',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '416.8',
+                    'track': '321.2',
+                    'vertical_rate': '-1408',
+                    'callsign': '',
+                    'onground': '',
+                    'alert': '',
+                    'spi': '',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274815',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274815',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                }
+            ]
+        }
+        # Appelez votre fonction de classification
+        result = classify_aircrafts(example_message)
+
+        # Vérifiez si le résultat est correct
+        self.assertEqual(result[0]['message'], example_message['message'])
+        self.assertEqual(result[0]['error'], "<AdsbMessageField.ICAO: 'icao24'>")
+        self.assertEqual(result[1], 500)
+
+    def test_classify_aircrafts_valid_missing_icao_second_message(self):
+        """Test case for classify_aircrafts
+
+        Send an array message ADS-B to the server.
+        """
+        example_message = {
+            'message': [
+                {
+                    'timestamp': '1481274816',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '416.8',
+                    'track': '321.2',
+                    'vertical_rate': '-1408',
+                    'callsign': '',
+                    'onground': '',
+                    'alert': '',
+                    'spi': '',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274816',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274816',
+                    'icao24': '396441',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '35175',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                }
+            ]
+        }
+        # Appelez votre fonction de classification
+        result = classify_aircrafts(example_message)
+
+        # Vérifiez si le résultat est correct
+        self.assertEqual(result[0]['message'], example_message['message'])
+        self.assertEqual(result[0]['prediction'], 'LIGHT')
+        self.assertEqual(result[0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[1], 200)
+
+    def test_classify_aircrafts_valid2(self):
+        """Test case for classify_aircrafts
+
+        Send an array message ADS-B to the server.
+        """
+        example_message = {
+            'message': [
+                {
+                    'timestamp': '1481274814',
+                    'icao24': '394C19',
+                    'latitude': '',
+                    'longitude': '',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': '',
+                    'spi': '',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                },
+                {
+                    'timestamp': '1481274814',
+                    'icao24': '394C19',
+                    'latitude': '43.56546',
+                    'longitude': '0.90741',
+                    'groundspeed': '',
+                    'track': '',
+                    'vertical_rate': '',
+                    'callsign': '',
+                    'onground': 'False',
+                    'alert': 'False',
+                    'spi': 'False',
+                    'squawk': '',
+                    'altitude': '',
+                    'geoaltitude': '23800',
+                    'last_position': '',
+                    'lastcontact': '',
+                    'hour': '',
+                }
+
+            ]
+        }
+        # Appelez votre fonction de classification
+        result = classify_aircrafts(example_message)
+
+        # Vérifiez si le résultat est correct
+        self.assertEqual(result[0]['message'], example_message['message'])
+        self.assertEqual(result[0]['prediction'], 'LIGHT')
+        self.assertEqual(result[0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[1],200)
 
 if __name__ == '__main__':
     unittest.main()

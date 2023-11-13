@@ -6,6 +6,7 @@ dapia_detection_api/models/__init__.py
 dapia_detection_api/models/aircraft_types.py
 dapia_detection_api/models/base_model.py
 dapia_detection_api/models/classify_aircraft_request.py
+dapia_detection_api/models/classify_aircrafts_request.py
 dapia_detection_api/models/data.py
 dapia_detection_api/models/data1.py
 dapia_detection_api/models/response200_classify_aircraft.py
