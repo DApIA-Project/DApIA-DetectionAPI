@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.11.5-slim
 
 ENV MODE=""
 ENV PYTHONFAULTHANDLER=1
@@ -14,7 +14,7 @@ RUN pip3 install "poetry==$POETRY_VERSION"
 COPY . /usr/src/app
 WORKDIR /usr/src/app
 
-RUN poetry config virtualenvs.create false
+RUN poetry config virtualenvs.create true
 RUN poetry install $MODE --no-interaction --no-ansi
 
 EXPOSE 3033
