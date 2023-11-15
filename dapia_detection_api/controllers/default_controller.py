@@ -17,7 +17,7 @@ def classify_aircrafts(body):
 
         :rtype: Union[SendMessagePost200Response, Tuple[SendMessagePost200Response, int], Tuple[SendMessagePost200Response, int, Dict[str, str]]
         """
-
+    print(body)
     originalMessage = copy.copy(body["message"])
 
     try:
@@ -62,40 +62,40 @@ def classify_aircrafts(body):
 
         predictions = {}
         predictions[icao] = []
-        if message[AdsbMessageField.TIMESTAMP] != '':
+        if message[AdsbMessageField.TIMESTAMP] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.TIMESTAMP] = int(message[AdsbMessageField.TIMESTAMP])
         else:
             message[AdsbMessageField.TIMESTAMP] = np.nan
-        if message[AdsbMessageField.LATITUDE] != '':
+        if message[AdsbMessageField.LATITUDE] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.LATITUDE] = float(message[AdsbMessageField.LATITUDE])
         else:
             message[AdsbMessageField.LATITUDE] = np.nan
-        if message[AdsbMessageField.LONGITUDE] != '':
+        if message[AdsbMessageField.LONGITUDE] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.LONGITUDE] = float(message[AdsbMessageField.LONGITUDE])
         else:
             message[AdsbMessageField.LONGITUDE] = np.nan
-        if message[AdsbMessageField.GROUND_SPEED] != '':
+        if message[AdsbMessageField.GROUND_SPEED] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.GROUND_SPEED] = float(message[AdsbMessageField.GROUND_SPEED])
         else:
             message[AdsbMessageField.GROUND_SPEED] = np.nan
-        if message[AdsbMessageField.TRACK] != '':
+        if message[AdsbMessageField.TRACK] != '' and message[AdsbMessageField.TRACK] is not None:
             message[AdsbMessageField.TRACK] = float(message[AdsbMessageField.TRACK])
         else:
             message[AdsbMessageField.TRACK] = np.nan
-        if message[AdsbMessageField.VERTICAL_RATE] != '':
+        if message[AdsbMessageField.VERTICAL_RATE] != '' and message[AdsbMessageField.VERTICAL_RATE] is not None:
             message[AdsbMessageField.VERTICAL_RATE] = float(message[AdsbMessageField.VERTICAL_RATE])
         else:
             message[AdsbMessageField.VERTICAL_RATE] = np.nan
-        if message[AdsbMessageField.ALTITUDE] != '':
+        if message[AdsbMessageField.ALTITUDE] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.ALTITUDE] = float(message[AdsbMessageField.ALTITUDE])
         else:
             message[AdsbMessageField.ALTITUDE] = np.nan
-        if message[AdsbMessageField.GEO_ALTITUDE] != '':
+        if message[AdsbMessageField.GEO_ALTITUDE] != '' and message[AdsbMessageField.GROUND_SPEED] is not None:
             message[AdsbMessageField.GEO_ALTITUDE] = float(message[AdsbMessageField.GEO_ALTITUDE])
         else:
             message[AdsbMessageField.GEO_ALTITUDE] = np.nan
 
-        if message[AdsbMessageField.SQUAWK] != "NaN" and message[AdsbMessageField.SQUAWK] != "":
+        if message[AdsbMessageField.SQUAWK] != "NaN" and message[AdsbMessageField.SQUAWK] != "" and message[AdsbMessageField.SQUAWK] is not None:
             message[AdsbMessageField.SQUAWK] = int(message[AdsbMessageField.SQUAWK])
         else:
             message[AdsbMessageField.SQUAWK] = np.nan
@@ -126,4 +126,5 @@ def classify_aircrafts(body):
         return {'message': originalMessage, 'prediction': labelToName(major_label_flight_1),
                 'truth': labelToName(truth)}, 200
     except Exception as e:
+        print(e)
         return {'message': originalMessage, 'error': f'{e}'}, 500
