@@ -92,118 +92,50 @@ components:
           type: array
       title: classify_aircrafts_request
       type: object
-    data:
-      description: "The messages, predictions, and real types."
+    Response_200_Classify_Aircraft_result_inner:
       example:
-        truths:
-        - null
-        - null
-        messages:
-        - timestamp: "1656766055"
-          icao24: 3b7b96
-          latitude: "43.40913391113281"
-          longitude: "1.724150901617006"
-          groundspeed: "120.0"
-          track: "311.2759420272517"
-          vertical_rate: "128.0"
-          callsign: DRAG66
-          onground: "False"
-          alert: "False"
-          spi: "False"
-          squawk: NaN
-          altitude: "1850.0"
-          geoaltitude: "1850.0"
-          last_position: ""
-          lastcontact: ""
-          hour: ""
-        - timestamp: "1656766055"
-          icao24: 3b7b96
-          latitude: "43.40913391113281"
-          longitude: "1.724150901617006"
-          groundspeed: "120.0"
-          track: "311.2759420272517"
-          vertical_rate: "128.0"
-          callsign: DRAG66
-          onground: "False"
-          alert: "False"
-          spi: "False"
-          squawk: NaN
-          altitude: "1850.0"
-          geoaltitude: "1850.0"
-          last_position: ""
-          lastcontact: ""
-          hour: ""
-        predictions:
-        - null
-        - null
+        truth: null
+        icao24: icao24
+        prediction: null
+        timestamp: 0.8008281904610115
       properties:
-        messages:
-          items:
-            $ref: '#/components/schemas/adsb_message'
-          title: messages
-          type: array
-        predictions:
-          items:
-            $ref: '#/components/schemas/aircraft_types'
-          title: predictions
-          type: array
-        truths:
-          items:
-            $ref: '#/components/schemas/aircraft_types'
-          title: truths
-          type: array
-      title: data
+        icao24:
+          title: icao24
+          type: string
+        timestamp:
+          title: timestamp
+          type: number
+        prediction:
+          $ref: '#/components/schemas/aircraft_types'
+        truth:
+          $ref: '#/components/schemas/aircraft_types'
+      title: Response_200_Classify_Aircraft_result_inner
       type: object
     Response_200_Classify_Aircraft:
       example:
-        data:
-          truths:
-          - null
-          - null
-          messages:
-          - timestamp: "1656766055"
-            icao24: 3b7b96
-            latitude: "43.40913391113281"
-            longitude: "1.724150901617006"
-            groundspeed: "120.0"
-            track: "311.2759420272517"
-            vertical_rate: "128.0"
-            callsign: DRAG66
-            onground: "False"
-            alert: "False"
-            spi: "False"
-            squawk: NaN
-            altitude: "1850.0"
-            geoaltitude: "1850.0"
-            last_position: ""
-            lastcontact: ""
-            hour: ""
-          - timestamp: "1656766055"
-            icao24: 3b7b96
-            latitude: "43.40913391113281"
-            longitude: "1.724150901617006"
-            groundspeed: "120.0"
-            track: "311.2759420272517"
-            vertical_rate: "128.0"
-            callsign: DRAG66
-            onground: "False"
-            alert: "False"
-            spi: "False"
-            squawk: NaN
-            altitude: "1850.0"
-            geoaltitude: "1850.0"
-            last_position: ""
-            lastcontact: ""
-            hour: ""
-          predictions:
-          - null
-          - null
+        result:
+        - truth: null
+          icao24: icao24
+          prediction: null
+          timestamp: 0.8008281904610115
+        - truth: null
+          icao24: icao24
+          prediction: null
+          timestamp: 0.8008281904610115
+        code: 200
       properties:
-        data:
-          $ref: '#/components/schemas/data'
+        result:
+          items:
+            $ref: '#/components/schemas/Response_200_Classify_Aircraft_result_inner'
+          title: result
+          type: array
+        code:
+          example: 200
+          title: code
+          type: integer
       title: Response 200 Classify Aircraft
       type: object
-    data_1:
+    data:
       description: The messages and the error.
       properties:
         messages:
@@ -219,7 +151,11 @@ components:
       type: object
     Response_500_Classify_Aircraft:
       properties:
-        data:
-          $ref: '#/components/schemas/data_1'
+        result:
+          $ref: '#/components/schemas/data'
+        code:
+          example: 500
+          title: code
+          type: integer
       title: Response 500 Classify Aircraft
       type: object

@@ -58,24 +58,22 @@ components:
             title: Response 200 Classify Aircraft
             type: object
             properties:
-              data:
-                description: The messages, predictions, and real types.
-                properties:
-                  messages:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/adsb_message'
-                  predictions:
-                    type: array
-                    items:
+              result:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    icao24:
+                      type: string
+                    timestamp:
+                      type: number
+                    prediction:
                       $ref: '#/components/schemas/aircraft_types'
-                  truths:
-                    type: array
-                    items:
+                    truth:
                       $ref: '#/components/schemas/aircraft_types'
-                title: data
-                type: object
-
+              code :
+                type: integer
+                example: 200
     Response500ClassifyAircraft:
       description: The messages could not be processed by the server.
       content:
@@ -84,7 +82,7 @@ components:
             title: Response 500 Classify Aircraft
             type: object
             properties:
-              data:
+              result:
                 description: The messages and the error.
                 properties:
                   messages:
@@ -96,3 +94,6 @@ components:
                     description: Error name found
                 title: data
                 type: object
+              code:
+                type: integer
+                example: 500
