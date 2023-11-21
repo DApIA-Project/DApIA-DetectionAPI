@@ -135,7 +135,7 @@ components:
           type: integer
       title: Response 200 Classify Aircraft
       type: object
-    data:
+    Response_500_Classify_Aircraft_result_inner:
       description: The messages and the error.
       properties:
         messages:
@@ -147,12 +147,15 @@ components:
           description: Error name found
           title: error
           type: string
-      title: data
+      title: Response_500_Classify_Aircraft_result_inner
       type: object
     Response_500_Classify_Aircraft:
       properties:
         result:
-          $ref: '#/components/schemas/data'
+          items:
+            $ref: '#/components/schemas/Response_500_Classify_Aircraft_result_inner'
+          title: result
+          type: array
         code:
           example: 500
           title: code

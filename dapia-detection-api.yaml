@@ -83,17 +83,18 @@ components:
             type: object
             properties:
               result:
-                description: The messages and the error.
-                properties:
-                  messages:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/adsb_message'
-                  error:
-                    type: string
-                    description: Error name found
-                title: data
-                type: object
+                type : array
+                items :
+                  type : object
+                  description: The messages and the error.
+                  properties:
+                    messages:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/adsb_message'
+                    error:
+                      type: string
+                      description: Error name found
               code:
                 type: integer
                 example: 500

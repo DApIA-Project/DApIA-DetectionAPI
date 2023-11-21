@@ -19,12 +19,12 @@ def classify_aircrafts(body):
 
         :rtype: Union[SendMessagePost200Response, Tuple[SendMessagePost200Response, int], Tuple[SendMessagePost200Response, int, Dict[str, str]]
         """
-    print(body)
-    originalMessage = copy.copy(body["message"])
 
+    originalMessage = copy.copy(body["message"])
     messagesWithoutDouble = mergeDouble(copy.copy(body["message"]))
-    if 'error' in messagesWithoutDouble:
-        return {'result': {'messages': originalMessage, 'error': messagesWithoutDouble['error']}, 'cpde': 500}
+
+    if 'error' in messagesWithoutDouble[0]:
+        return [{'messages': originalMessage, 'error': messagesWithoutDouble[0]['error']}], 500
     predictions = {}
     try:
         for messageWithoutDouble in messagesWithoutDouble:
@@ -37,17 +37,17 @@ def classify_aircrafts(body):
                 predictions[icao][timestamp] = []
 
             if messageWithoutDouble[AdsbMessageField.TIMESTAMP] != '' and messageWithoutDouble[
-                AdsbMessageField.GROUND_SPEED] is not None:
+                AdsbMessageField.TIMESTAMP] is not None:
                 messageWithoutDouble[AdsbMessageField.TIMESTAMP] = int(messageWithoutDouble[AdsbMessageField.TIMESTAMP])
             else:
                 messageWithoutDouble[AdsbMessageField.TIMESTAMP] = np.nan
             if messageWithoutDouble[AdsbMessageField.LATITUDE] != '' and messageWithoutDouble[
-                AdsbMessageField.GROUND_SPEED] is not None:
+                AdsbMessageField.LATITUDE] is not None:
                 messageWithoutDouble[AdsbMessageField.LATITUDE] = float(messageWithoutDouble[AdsbMessageField.LATITUDE])
             else:
                 messageWithoutDouble[AdsbMessageField.LATITUDE] = np.nan
             if messageWithoutDouble[AdsbMessageField.LONGITUDE] != '' and messageWithoutDouble[
-                AdsbMessageField.GROUND_SPEED] is not None:
+                AdsbMessageField.LONGITUDE] is not None:
                 messageWithoutDouble[AdsbMessageField.LONGITUDE] = float(
                     messageWithoutDouble[AdsbMessageField.LONGITUDE])
             else:
@@ -104,8 +104,8 @@ def classify_aircrafts(body):
                 messageWithoutDouble[AdsbMessageField.SPI] = False
 
             print(messageWithoutDouble)
-
             a = predictAircraftType([messageWithoutDouble])
+            print(a)
             for icao, proba in a.items():
                 predictions[icao][timestamp].append(proba)
 
@@ -121,59 +121,67 @@ def classify_aircrafts(body):
                            'truth': labelToName(truth)})
             print(labelToName(major_label_flight_1), " : ", labelToName(truth))
 
-        return {'result': result, 'code': 200}
+        return result, 200
     except Exception as e:
         print(e)
-        return {'result': {'messages': originalMessage, 'error': f'{e}'}, 'code': 500}
+        return [{'messages': originalMessage, 'error': f'{e}'}], 500
 
 
 def mergeDouble(messages):
-    try:
+    if not messages:
+        return [{'error': 'No Message'}]
+    else:
         messagesWithoutDouble = [messages[0]]
-        for message in messages:
-            hasBeenMerged = False
-            for messageWithoutDouble in messagesWithoutDouble:
-                if message[AdsbMessageField.ICAO] == messageWithoutDouble[AdsbMessageField.ICAO] and message[
-                    AdsbMessageField.TIMESTAMP] == messageWithoutDouble[AdsbMessageField.TIMESTAMP]:
-                    if messageWithoutDouble[AdsbMessageField.ICAO] == '':
-                        messageWithoutDouble[AdsbMessageField.ICAO] = message[AdsbMessageField.ICAO]
-                    if messageWithoutDouble[AdsbMessageField.TIMESTAMP] == '':
-                        messageWithoutDouble[AdsbMessageField.TIMESTAMP] = message[AdsbMessageField.TIMESTAMP]
-                    if messageWithoutDouble[AdsbMessageField.LATITUDE] == '':
-                        messageWithoutDouble[AdsbMessageField.LATITUDE] = message[AdsbMessageField.LATITUDE]
-                    if messageWithoutDouble[AdsbMessageField.LONGITUDE] == '':
-                        messageWithoutDouble[AdsbMessageField.LONGITUDE] = message[AdsbMessageField.LONGITUDE]
-                    if messageWithoutDouble[AdsbMessageField.GROUND_SPEED] == '':
-                        messageWithoutDouble[AdsbMessageField.GROUND_SPEED] = message[AdsbMessageField.GROUND_SPEED]
-                    if messageWithoutDouble[AdsbMessageField.TRACK] == '':
-                        messageWithoutDouble[AdsbMessageField.TRACK] = message[AdsbMessageField.TRACK]
-                    if messageWithoutDouble[AdsbMessageField.VERTICAL_RATE] == '':
-                        messageWithoutDouble[AdsbMessageField.VERTICAL_RATE] = message[AdsbMessageField.VERTICAL_RATE]
-                    if messageWithoutDouble[AdsbMessageField.CALLSIGN] == '':
-                        messageWithoutDouble[AdsbMessageField.CALLSIGN] = message[AdsbMessageField.CALLSIGN]
-                    if messageWithoutDouble[AdsbMessageField.ON_GROUND] == '':
-                        messageWithoutDouble[AdsbMessageField.ON_GROUND] = message[AdsbMessageField.ON_GROUND]
-                    if messageWithoutDouble[AdsbMessageField.ALERT] == '':
-                        messageWithoutDouble[AdsbMessageField.ALERT] = message[AdsbMessageField.ALERT]
-                    if messageWithoutDouble[AdsbMessageField.SPI] == '':
-                        messageWithoutDouble[AdsbMessageField.SPI] = message[AdsbMessageField.SPI]
-                    if messageWithoutDouble[AdsbMessageField.SQUAWK] == '':
-                        messageWithoutDouble[AdsbMessageField.SQUAWK] = message[AdsbMessageField.SQUAWK]
-                    if messageWithoutDouble[AdsbMessageField.ALTITUDE] == '':
-                        messageWithoutDouble[AdsbMessageField.ALTITUDE] = message[AdsbMessageField.ALTITUDE]
-                    if messageWithoutDouble[AdsbMessageField.GEO_ALTITUDE] == '':
-                        messageWithoutDouble[AdsbMessageField.GEO_ALTITUDE] = message[AdsbMessageField.GEO_ALTITUDE]
-                    if messageWithoutDouble[AdsbMessageField.LAST_POSITION] == '':
-                        messageWithoutDouble[AdsbMessageField.LAST_POSITION] = message[AdsbMessageField.LAST_POSITION]
-                    if messageWithoutDouble[AdsbMessageField.LAST_CONTACT] == '':
-                        messageWithoutDouble[AdsbMessageField.LAST_CONTACT] = message[AdsbMessageField.LAST_CONTACT]
-                    if messageWithoutDouble[AdsbMessageField.HOUR] == '':
-                        messageWithoutDouble[AdsbMessageField.HOUR] = message[AdsbMessageField.HOUR]
 
-                    hasBeenMerged = True
-            if not hasBeenMerged:
-                messagesWithoutDouble.append(message)
-        return messagesWithoutDouble
-    except Exception as e:
-        print(e)
-        return [{'error': f'{e}'}]
+        for message in messages:
+            if AdsbMessageField.ICAO in message:
+                hasBeenMerged = False
+                for messageWithoutDouble in messagesWithoutDouble:
+                    if AdsbMessageField.ICAO in messageWithoutDouble:
+                        if message[AdsbMessageField.ICAO] == messageWithoutDouble[AdsbMessageField.ICAO] and message[
+                            AdsbMessageField.TIMESTAMP] == messageWithoutDouble[AdsbMessageField.TIMESTAMP]:
+                            if messageWithoutDouble[AdsbMessageField.ICAO] == '':
+                                messageWithoutDouble[AdsbMessageField.ICAO] = message[AdsbMessageField.ICAO]
+                            if messageWithoutDouble[AdsbMessageField.TIMESTAMP] == '':
+                                messageWithoutDouble[AdsbMessageField.TIMESTAMP] = message[AdsbMessageField.TIMESTAMP]
+                            if messageWithoutDouble[AdsbMessageField.LATITUDE] == '':
+                                messageWithoutDouble[AdsbMessageField.LATITUDE] = message[AdsbMessageField.LATITUDE]
+                            if messageWithoutDouble[AdsbMessageField.LONGITUDE] == '':
+                                messageWithoutDouble[AdsbMessageField.LONGITUDE] = message[AdsbMessageField.LONGITUDE]
+                            if messageWithoutDouble[AdsbMessageField.GROUND_SPEED] == '':
+                                messageWithoutDouble[AdsbMessageField.GROUND_SPEED] = message[AdsbMessageField.GROUND_SPEED]
+                            if messageWithoutDouble[AdsbMessageField.TRACK] == '':
+                                messageWithoutDouble[AdsbMessageField.TRACK] = message[AdsbMessageField.TRACK]
+                            if messageWithoutDouble[AdsbMessageField.VERTICAL_RATE] == '':
+                                messageWithoutDouble[AdsbMessageField.VERTICAL_RATE] = message[
+                                    AdsbMessageField.VERTICAL_RATE]
+                            if messageWithoutDouble[AdsbMessageField.CALLSIGN] == '':
+                                messageWithoutDouble[AdsbMessageField.CALLSIGN] = message[AdsbMessageField.CALLSIGN]
+                            if messageWithoutDouble[AdsbMessageField.ON_GROUND] == '':
+                                messageWithoutDouble[AdsbMessageField.ON_GROUND] = message[AdsbMessageField.ON_GROUND]
+                            if messageWithoutDouble[AdsbMessageField.ALERT] == '':
+                                messageWithoutDouble[AdsbMessageField.ALERT] = message[AdsbMessageField.ALERT]
+                            if messageWithoutDouble[AdsbMessageField.SPI] == '':
+                                messageWithoutDouble[AdsbMessageField.SPI] = message[AdsbMessageField.SPI]
+                            if messageWithoutDouble[AdsbMessageField.SQUAWK] == '':
+                                messageWithoutDouble[AdsbMessageField.SQUAWK] = message[AdsbMessageField.SQUAWK]
+                            if messageWithoutDouble[AdsbMessageField.ALTITUDE] == '':
+                                messageWithoutDouble[AdsbMessageField.ALTITUDE] = message[AdsbMessageField.ALTITUDE]
+                            if messageWithoutDouble[AdsbMessageField.GEO_ALTITUDE] == '':
+                                messageWithoutDouble[AdsbMessageField.GEO_ALTITUDE] = message[AdsbMessageField.GEO_ALTITUDE]
+                            if messageWithoutDouble[AdsbMessageField.LAST_POSITION] == '':
+                                messageWithoutDouble[AdsbMessageField.LAST_POSITION] = message[
+                                    AdsbMessageField.LAST_POSITION]
+                            if messageWithoutDouble[AdsbMessageField.LAST_CONTACT] == '':
+                                messageWithoutDouble[AdsbMessageField.LAST_CONTACT] = message[AdsbMessageField.LAST_CONTACT]
+                            if messageWithoutDouble[AdsbMessageField.HOUR] == '':
+                                messageWithoutDouble[AdsbMessageField.HOUR] = message[AdsbMessageField.HOUR]
+
+                            hasBeenMerged = True
+                    else:
+                        return [{'error': 'No ICAO'}]
+                if not hasBeenMerged:
+                    messagesWithoutDouble.append(message)
+            else:
+                return [{'error': 'No ICAO'}]
+    return messagesWithoutDouble
