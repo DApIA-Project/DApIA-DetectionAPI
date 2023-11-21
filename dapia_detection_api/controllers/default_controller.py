@@ -103,9 +103,9 @@ def classify_aircrafts(body):
             else:
                 messageWithoutDouble[AdsbMessageField.SPI] = False
 
-            print(messageWithoutDouble)
+
             a = predictAircraftType([messageWithoutDouble])
-            print(a)
+
             for icao, proba in a.items():
                 predictions[icao][timestamp].append(proba)
 
@@ -119,11 +119,9 @@ def classify_aircrafts(body):
                            'timestamp': messageWithoutDouble[AdsbMessageField.TIMESTAMP],
                            'prediction': labelToName(major_label_flight_1),
                            'truth': labelToName(truth)})
-            print(labelToName(major_label_flight_1), " : ", labelToName(truth))
 
         return result, 200
     except Exception as e:
-        print(e)
         return [{'messages': originalMessage, 'error': f'{e}'}], 500
 
 
