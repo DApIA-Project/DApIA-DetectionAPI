@@ -21,6 +21,7 @@ def classify_aircrafts(body):
         """
 
     originalMessage = copy.copy(body["message"])
+    """
     messagesWithoutDouble = mergeDouble(copy.copy(body["message"]))
 
     if 'error' in messagesWithoutDouble[0]:
@@ -123,7 +124,29 @@ def classify_aircrafts(body):
         return result, 200
     except Exception as e:
         return [{'messages': originalMessage, 'error': f'{e}'}], 500
+    """
+    try:
+        predictions = {}
 
+        a = predictAircraftType(originalMessage)
+        result = []
+        for cle1, valeur1 in a.items():
+            for cle2, valeur2 in valeur1.items():
+                if cle1 not in predictions:
+                    predictions[cle1] = {}
+                if cle2 not in predictions[cle1]:
+                    predictions[cle1][cle2] = []
+                predictions[cle1][cle2].append(valeur2)
+                labels_flight_1 = probabilityToLabel(predictions[cle1][
+                                                         str(cle2)])
+
+                result.append({'icao24': cle1,
+                               'timestamp': cle2,
+                               'prediction': labelToName(np.bincount(labels_flight_1).argmax()),
+                               'truth': labelToName(getTruthLabelFromIcao(cle1))})
+        return result, 200
+    except Exception as e:
+        return [{'messages': originalMessage, 'error': f'{e}'}], 500
 
 def mergeDouble(messages):
     if not messages:

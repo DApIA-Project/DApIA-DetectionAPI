@@ -1,4 +1,5 @@
 ![DetectionAPI Unit Tests workflow](https://github.com/DApIA-Project/DApIA-DetectionAPI/actions/workflows/unit-tests.yml/badge.svg)
+![DetectionAPI Publish Docker Image workflow](https://github.com/DApIA-Project/DApIA-DetectionAPI/actions/workflows/publish_docker.yaml/badge.svg)
 
 
 # DApIA Detection API
@@ -46,18 +47,12 @@ poetry run python -m dapia_detection_api
 ```
 ## Run with Docker
 
-To run the server on a Docker container, please execute the following from the root directory:
+To run the server on a Docker container, please execute the following :
 
-Build the image:
-
-```bash
-docker build -t dapia-detection-api .
-```
-
-Start up a container:
+Build the image and start up a container:
 
 ```bash
-docker run -p 3033:3033 dapia-detection-api
+docker run -p 3033:3033 dapiaproject/detection-api:0.2
 ```
 
 ## Use API

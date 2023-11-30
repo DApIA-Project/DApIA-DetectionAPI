@@ -30,17 +30,20 @@ class TestDefaultController(BaseTestCase):
             'last_position': '',
             'lastcontact': '',
             'hour': '',
-    }]
+    }
+            ]
         }
         # Appelez votre fonction de classification
         result = classify_aircrafts(example_message)
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '39ac45')
-        self.assertEqual(result[0][0]['timestamp'], 1656652128)
+        self.assertEqual(result[0][0]['timestamp'], '1656652128')
         self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][0]['truth'], 'HELICOPTER')
         self.assertEqual(result[1],200)
+
+
 
     def test_classify_many_aircrafts_valid(self):
         """Test case for classify_aircraft
@@ -63,9 +66,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '',
                 'altitude': '',
                 'geoaltitude': '',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             },
             {
                 'timestamp': '1481274833',
@@ -82,9 +82,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '',
                 'altitude': '',
                 'geoaltitude': '35175',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             },
             {
                 'timestamp': '1481274833',
@@ -101,9 +98,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '7015',
                 'altitude': '550.0',
                 'geoaltitude': '550.0',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             },
             {
                 'timestamp': '1481274834',
@@ -120,9 +114,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '',
                 'altitude': '',
                 'geoaltitude': '35175',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             },
             {
                 'timestamp': '1481274834',
@@ -139,9 +130,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '',
                 'altitude': '',
                 'geoaltitude': '35175',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             },
             {
                 'timestamp': '1481274834',
@@ -158,9 +146,6 @@ class TestDefaultController(BaseTestCase):
                 'squawk': '7015',
                 'altitude': '550.0',
                 'geoaltitude': '550.0',
-                'last_position': '',
-                'lastcontact': '',
-                'hour': '',
             }
             ]
         }
@@ -169,19 +154,22 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '396441')
-        self.assertEqual(result[0][0]['timestamp'], 1481274833)
-        self.assertEqual(result[0][0]['prediction'], 'LIGHT')
+        self.assertEqual(result[0][0]['timestamp'], '1481274833')
+        self.assertEqual(result[0][0]['prediction'], 'PLANE')
         self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
-        self.assertEqual(result[0][1]['icao24'], '391245')
-        self.assertEqual(result[0][1]['timestamp'], 1481274833)
-        self.assertEqual(result[0][1]['prediction'], 'HELICOPTER')
+
+        self.assertEqual(result[0][1]['icao24'], '396441')
+        self.assertEqual(result[0][1]['timestamp'], '1481274834')
+        self.assertEqual(result[0][1]['prediction'], 'PLANE')
         self.assertEqual(result[0][1]['truth'], 'UNKNOWN')
-        self.assertEqual(result[0][2]['icao24'], '396441')
-        self.assertEqual(result[0][2]['timestamp'], 1481274834)
-        self.assertEqual(result[0][2]['prediction'], 'LIGHT')
+
+        self.assertEqual(result[0][2]['icao24'], '391245')
+        self.assertEqual(result[0][2]['timestamp'], '1481274833')
+        self.assertEqual(result[0][2]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][2]['truth'], 'UNKNOWN')
+
         self.assertEqual(result[0][3]['icao24'], '391245')
-        self.assertEqual(result[0][3]['timestamp'], 1481274834)
+        self.assertEqual(result[0][3]['timestamp'], '1481274834')
         self.assertEqual(result[0][3]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][3]['truth'], 'UNKNOWN')
         self.assertEqual(result[1], 200)
@@ -218,7 +206,7 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '')
-        self.assertEqual(result[0][0]['timestamp'], 1656652128)
+        self.assertEqual(result[0][0]['timestamp'], '1656652128')
         self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
         self.assertEqual(result[1],200)
@@ -254,7 +242,7 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['messages'], example_message['message'])
-        self.assertEqual(result[0][0]['error'], "No ICAO")
+        self.assertEqual(result[0][0]['error'], "'icao24'")
         self.assertEqual(result[1],500)
 
     def test_classify_aircrafts_valid2(self):
@@ -328,7 +316,7 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '396441')
-        self.assertEqual(result[0][0]['timestamp'], 1481274814)
+        self.assertEqual(result[0][0]['timestamp'], '1481274814')
         self.assertEqual(result[0][0]['prediction'], 'PLANE')
         self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
         self.assertEqual(result[1],200)
@@ -403,7 +391,7 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['messages'], example_message['message'])
-        self.assertEqual(result[0][0]['error'], "No ICAO")
+        self.assertEqual(result[0][0]['error'], "'icao24'")
         self.assertEqual(result[1], 500)
 
     def test_classify_aircrafts_no_valid_missing_icao_second_message(self):
@@ -476,7 +464,7 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['messages'], example_message['message'])
-        self.assertEqual(result[0][0]['error'], "No ICAO")
+        self.assertEqual(result[0][0]['error'], "'icao24'")
         self.assertEqual(result[1], 500)
 
     def test_classify_aircrafts_valid3(self):
@@ -532,8 +520,8 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '394C19')
-        self.assertEqual(result[0][0]['timestamp'], 1481274814)
-        self.assertEqual(result[0][0]['prediction'], 'LIGHT')
+        self.assertEqual(result[0][0]['timestamp'], '1481274814')
+        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
         self.assertEqual(result[1],200)
 
@@ -572,8 +560,8 @@ class TestDefaultController(BaseTestCase):
 
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '39ac45')
-        self.assertEqual(result[0][0]['timestamp'], 1656766070)
-        self.assertEqual(result[0][0]['prediction'], 'LIGHT')
+        self.assertEqual(result[0][0]['timestamp'], '1656766070')
+        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
         self.assertEqual(result[0][0]['truth'], 'HELICOPTER')
         self.assertEqual(result[1],200)
 
