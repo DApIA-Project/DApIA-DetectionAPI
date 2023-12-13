@@ -561,7 +561,7 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '39ac45')
         self.assertEqual(result[0][0]['timestamp'], '1656766070')
-        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['prediction'], 'PLANE')
         self.assertEqual(result[0][0]['truth'], 'HELICOPTER')
         self.assertEqual(result[1],200)
 

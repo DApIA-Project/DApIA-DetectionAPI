@@ -13,12 +13,12 @@ files = [
 
 [[package]]
 name = "adsbanomalydetector"
-version = "0.2.2"
+version = "0.2.4"
 description = "Low altitude aircraft anomaly detector"
 optional = false
 python-versions = "*"
 files = [
-    {file = "AdsbAnomalyDetector-0.2.2.tar.gz", hash = "sha256:69c719a60ea89c5f84e15c0967176a98aa78429970e07e11b5804425bf8d72a4"},
+    {file = "AdsbAnomalyDetector-0.2.4.tar.gz", hash = "sha256:69915684f3ac10e1e00bb0183de9f5544afb1d73ded062fb9e9de9b51d4e3116"},
 ]
 
 [package.dependencies]
@@ -1968,4 +1968,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "3.11.5"
-content-hash = "12cefa704f18245402c20763f5ea56479c56fc8b779b6ea4fa2ba3b855f6f322"
+content-hash = "7fd51724fb90711c7251eeaba4bfec51411f48b25a910b543bc402129738ae57"

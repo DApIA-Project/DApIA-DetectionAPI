@@ -19,7 +19,7 @@ tensorflow-io-gcs-filesystem = "0.31.0"
 testcase = "^0.1.0"
 flask-testing = "^0.8.1"
 flask-cors = "^4.0.0"
-adsbanomalydetector = "^0.2.2"
+adsbanomalydetector = "0.2.4"
 
 [build-system]
 requires = ["poetry-core"]
