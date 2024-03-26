@@ -67,9 +67,9 @@ components:
                       type: string
                     timestamp:
                       type: number
-                    prediction:
+                    realType:
                       $ref: '#/components/schemas/aircraft_types'
-                    truth:
+                    claimedType:
                       $ref: '#/components/schemas/aircraft_types'
               code :
                 type: integer

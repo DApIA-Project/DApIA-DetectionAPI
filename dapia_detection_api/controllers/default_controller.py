@@ -142,8 +142,8 @@ def classify_aircrafts(body):
 
                 result.append({'icao24': cle1,
                                'timestamp': cle2,
-                               'prediction': labelToName(np.bincount(labels_flight_1).argmax()),
-                               'truth': labelToName(getTruthLabelFromIcao(cle1))})
+                               'realType': labelToName(np.bincount(labels_flight_1).argmax()),
+                               'claimedType': labelToName(getTruthLabelFromIcao(cle1))})
         return result, 200
     except Exception as e:
         return [{'messages': originalMessage, 'error': f'{e}'}], 500

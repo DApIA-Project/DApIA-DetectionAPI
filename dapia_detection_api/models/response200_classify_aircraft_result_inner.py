@@ -14,36 +14,36 @@ class Response200ClassifyAircraftResultInner(Model):
     Do not edit the class manually.
     """
 
-    def __init__(self, icao24=None, timestamp=None, prediction=None, truth=None):  # noqa: E501
+    def __init__(self, icao24=None, timestamp=None, real_type=None, claimed_type=None):  # noqa: E501
         """Response200ClassifyAircraftResultInner - a model defined in OpenAPI
 
         :param icao24: The icao24 of this Response200ClassifyAircraftResultInner.  # noqa: E501
         :type icao24: str
         :param timestamp: The timestamp of this Response200ClassifyAircraftResultInner.  # noqa: E501
         :type timestamp: float
-        :param prediction: The prediction of this Response200ClassifyAircraftResultInner.  # noqa: E501
-        :type prediction: AircraftTypes
-        :param truth: The truth of this Response200ClassifyAircraftResultInner.  # noqa: E501
-        :type truth: AircraftTypes
+        :param real_type: The real_type of this Response200ClassifyAircraftResultInner.  # noqa: E501
+        :type real_type: AircraftTypes
+        :param claimed_type: The claimed_type of this Response200ClassifyAircraftResultInner.  # noqa: E501
+        :type claimed_type: AircraftTypes
         """
         self.openapi_types = {
             'icao24': str,
             'timestamp': float,
-            'prediction': AircraftTypes,
-            'truth': AircraftTypes
+            'real_type': AircraftTypes,
+            'claimed_type': AircraftTypes
         }
 
         self.attribute_map = {
             'icao24': 'icao24',
             'timestamp': 'timestamp',
-            'prediction': 'prediction',
-            'truth': 'truth'
+            'real_type': 'realType',
+            'claimed_type': 'claimedType'
         }
 
         self._icao24 = icao24
         self._timestamp = timestamp
-        self._prediction = prediction
-        self._truth = truth
+        self._real_type = real_type
+        self._claimed_type = claimed_type
 
     @classmethod
     def from_dict(cls, dikt) -> 'Response200ClassifyAircraftResultInner':
@@ -99,43 +99,43 @@ class Response200ClassifyAircraftResultInner(Model):
         self._timestamp = timestamp
 
     @property
-    def prediction(self) -> AircraftTypes:
-        """Gets the prediction of this Response200ClassifyAircraftResultInner.
+    def real_type(self) -> AircraftTypes:
+        """Gets the real_type of this Response200ClassifyAircraftResultInner.
 
 
-        :return: The prediction of this Response200ClassifyAircraftResultInner.
+        :return: The real_type of this Response200ClassifyAircraftResultInner.
         :rtype: AircraftTypes
         """
-        return self._prediction
+        return self._real_type
 
-    @prediction.setter
-    def prediction(self, prediction: AircraftTypes):
-        """Sets the prediction of this Response200ClassifyAircraftResultInner.
+    @real_type.setter
+    def real_type(self, real_type: AircraftTypes):
+        """Sets the real_type of this Response200ClassifyAircraftResultInner.
 
 
-        :param prediction: The prediction of this Response200ClassifyAircraftResultInner.
-        :type prediction: AircraftTypes
+        :param real_type: The real_type of this Response200ClassifyAircraftResultInner.
+        :type real_type: AircraftTypes
         """
 
-        self._prediction = prediction
+        self._real_type = real_type
 
     @property
-    def truth(self) -> AircraftTypes:
-        """Gets the truth of this Response200ClassifyAircraftResultInner.
+    def claimed_type(self) -> AircraftTypes:
+        """Gets the claimed_type of this Response200ClassifyAircraftResultInner.
 
 
-        :return: The truth of this Response200ClassifyAircraftResultInner.
+        :return: The claimed_type of this Response200ClassifyAircraftResultInner.
         :rtype: AircraftTypes
         """
-        return self._truth
+        return self._claimed_type
 
-    @truth.setter
-    def truth(self, truth: AircraftTypes):
-        """Sets the truth of this Response200ClassifyAircraftResultInner.
+    @claimed_type.setter
+    def claimed_type(self, claimed_type: AircraftTypes):
+        """Sets the claimed_type of this Response200ClassifyAircraftResultInner.
 
 
-        :param truth: The truth of this Response200ClassifyAircraftResultInner.
-        :type truth: AircraftTypes
+        :param claimed_type: The claimed_type of this Response200ClassifyAircraftResultInner.
+        :type claimed_type: AircraftTypes
         """
 
-        self._truth = truth
+        self._claimed_type = claimed_type

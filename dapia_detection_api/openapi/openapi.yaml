@@ -94,9 +94,9 @@ components:
       type: object
     Response_200_Classify_Aircraft_result_inner:
       example:
-        truth: null
+        realType: null
+        claimedType: null
         icao24: icao24
-        prediction: null
         timestamp: 0.8008281904610115
       properties:
         icao24:
@@ -105,22 +105,22 @@ components:
         timestamp:
           title: timestamp
           type: number
-        prediction:
+        realType:
           $ref: '#/components/schemas/aircraft_types'
-        truth:
+        claimedType:
           $ref: '#/components/schemas/aircraft_types'
       title: Response_200_Classify_Aircraft_result_inner
       type: object
     Response_200_Classify_Aircraft:
       example:
         result:
-        - truth: null
+        - realType: null
+          claimedType: null
           icao24: icao24
-          prediction: null
           timestamp: 0.8008281904610115
-        - truth: null
+        - realType: null
+          claimedType: null
           icao24: icao24
-          prediction: null
           timestamp: 0.8008281904610115
         code: 200
       properties:

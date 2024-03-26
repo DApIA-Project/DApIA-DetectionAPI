@@ -39,8 +39,8 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '39ac45')
         self.assertEqual(result[0][0]['timestamp'], '1656652128')
-        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
-        self.assertEqual(result[0][0]['truth'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['realType'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['claimedType'], 'HELICOPTER')
         self.assertEqual(result[1],200)
 
 
@@ -155,23 +155,23 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '396441')
         self.assertEqual(result[0][0]['timestamp'], '1481274833')
-        self.assertEqual(result[0][0]['prediction'], 'PLANE')
-        self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][0]['realType'], 'PLANE')
+        self.assertEqual(result[0][0]['claimedType'], 'UNKNOWN')
 
         self.assertEqual(result[0][1]['icao24'], '396441')
         self.assertEqual(result[0][1]['timestamp'], '1481274834')
-        self.assertEqual(result[0][1]['prediction'], 'PLANE')
-        self.assertEqual(result[0][1]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][1]['realType'], 'PLANE')
+        self.assertEqual(result[0][1]['claimedType'], 'UNKNOWN')
 
         self.assertEqual(result[0][2]['icao24'], '391245')
         self.assertEqual(result[0][2]['timestamp'], '1481274833')
-        self.assertEqual(result[0][2]['prediction'], 'HELICOPTER')
-        self.assertEqual(result[0][2]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][2]['realType'], 'HELICOPTER')
+        self.assertEqual(result[0][2]['claimedType'], 'UNKNOWN')
 
         self.assertEqual(result[0][3]['icao24'], '391245')
         self.assertEqual(result[0][3]['timestamp'], '1481274834')
-        self.assertEqual(result[0][3]['prediction'], 'HELICOPTER')
-        self.assertEqual(result[0][3]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][3]['realType'], 'HELICOPTER')
+        self.assertEqual(result[0][3]['claimedType'], 'UNKNOWN')
         self.assertEqual(result[1], 200)
 
 
@@ -207,8 +207,8 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '')
         self.assertEqual(result[0][0]['timestamp'], '1656652128')
-        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
-        self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][0]['realType'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['claimedType'], 'UNKNOWN')
         self.assertEqual(result[1],200)
 
 
@@ -317,8 +317,8 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '396441')
         self.assertEqual(result[0][0]['timestamp'], '1481274814')
-        self.assertEqual(result[0][0]['prediction'], 'PLANE')
-        self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][0]['realType'], 'PLANE')
+        self.assertEqual(result[0][0]['claimedType'], 'UNKNOWN')
         self.assertEqual(result[1],200)
 
     def test_classify_aircrafts_no_valid_missing_icao_first_message(self):
@@ -521,8 +521,8 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '394C19')
         self.assertEqual(result[0][0]['timestamp'], '1481274814')
-        self.assertEqual(result[0][0]['prediction'], 'HELICOPTER')
-        self.assertEqual(result[0][0]['truth'], 'UNKNOWN')
+        self.assertEqual(result[0][0]['realType'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['claimedType'], 'UNKNOWN')
         self.assertEqual(result[1],200)
 
 
@@ -561,8 +561,8 @@ class TestDefaultController(BaseTestCase):
         # Vérifiez si le résultat est correct
         self.assertEqual(result[0][0]['icao24'], '39ac45')
         self.assertEqual(result[0][0]['timestamp'], '1656766070')
-        self.assertEqual(result[0][0]['prediction'], 'PLANE')
-        self.assertEqual(result[0][0]['truth'], 'HELICOPTER')
+        self.assertEqual(result[0][0]['realType'], 'PLANE')
+        self.assertEqual(result[0][0]['claimedType'], 'HELICOPTER')
         self.assertEqual(result[1],200)
 
 if __name__ == '__main__':

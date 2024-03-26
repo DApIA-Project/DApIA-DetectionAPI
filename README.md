@@ -52,7 +52,7 @@ To run the server on a Docker container, please execute the following :
 Build the image and start up a container:
 
 ```bash
-docker run -p 3033:3033 dapiaproject/detection-api:0.3
+docker run -p 3033:3033 dapiaproject/detection-api:0.4
 ```
 
 ## Use API
